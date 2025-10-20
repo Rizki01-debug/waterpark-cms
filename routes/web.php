@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\User\UserDashboardController;
+use App\Http\Controllers\Admin\FasilitasController;
 
 // Route login
 Route::get('/', function () {
@@ -16,9 +17,11 @@ Route::middleware(['auth', 'user'])->group(function () {
 });
 
 // Route Admin (Backend)
-Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
-    Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
+Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(function () {
+    Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
+    Route::resource('fasilitas', FasilitasController::class);
 });
+
 
 
 Route::middleware('auth')->group(function () {

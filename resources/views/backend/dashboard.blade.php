@@ -9,10 +9,10 @@
   <!-- Stat Cards -->
   @php
     $stats = [
-      ['value' => '1,254', 'label' => 'Total Pengunjung', 'icon' => 'fas fa-users', 'color' => 'primary'],
-      ['value' => '324', 'label' => 'Reservasi Hari Ini', 'icon' => 'fas fa-calendar-check', 'color' => 'success'],
-      ['value' => 'Rp 45.2Jt', 'label' => 'Pendapatan Bulan Ini', 'icon' => 'fas fa-chart-line', 'color' => 'warning'],
-      ['value' => '12', 'label' => 'Fasilitas Aktif', 'icon' => 'fas fa-umbrella-beach', 'color' => 'info'],
+      ['value' => number_format($totalPengunjung), 'label' => 'Total Pengunjung', 'icon' => 'fas fa-users', 'color' => 'primary'],
+      ['value' => $reservasiHariIni, 'label' => 'Reservasi Hari Ini', 'icon' => 'fas fa-calendar-check', 'color' => 'success'],
+      ['value' => $pendapatanBulanIni, 'label' => 'Pendapatan Bulan Ini', 'icon' => 'fas fa-chart-line', 'color' => 'warning'],
+      ['value' => $fasilitasAktif, 'label' => 'Fasilitas Aktif', 'icon' => 'fas fa-umbrella-beach', 'color' => 'info'],
     ];
   @endphp
 
@@ -32,6 +32,7 @@
     </div>
   @endforeach
 </div>
+
 
 <!-- Charts & Activities -->
 <div class="row mt-4 g-4">

@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <!-- Material Dashboard CSS -->
   <link rel="stylesheet" href="{{ asset('adminlte/css/material-dashboard.css') }}">
+  <link rel="stylesheet" href="{{ asset('adminlte/css/material-dashboard.css.map') }}">
   <!-- Custom Sidebar CSS -->
   <link rel="stylesheet" href="{{ asset('adminlte/css/sidebar.css') }}">
   <link rel="stylesheet" href="{{ asset('adminlte/css/backend.css') }}">

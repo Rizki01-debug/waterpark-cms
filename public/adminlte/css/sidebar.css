@@ -1,9 +1,16 @@
+/* ================================
+   SIDEBAR DEFAULT (NON-RESPONSIVE)
+   ================================ */
+
 .sidebar {
+  width: 260px;
   box-shadow: 4px 0 15px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
+  transition: all 0.3s ease;
 }
 
+/* Logo icon effect */
 .logo-icon {
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
@@ -13,13 +20,14 @@
   transform: scale(1.1);
 }
 
+/* Navigation link styling */
 .nav-link {
   transition: all 0.3s ease;
   border: none;
   margin-bottom: 4px;
 }
 
-.nav-link:hover, 
+.nav-link:hover,
 .nav-link.active {
   background: rgba(255, 255, 255, 0.15) !important;
   transform: translateX(5px);
@@ -31,26 +39,29 @@
   text-align: center;
 }
 
+/* Hover effect (used for extra interaction) */
 .hover-effect:hover {
   background: rgba(255, 255, 255, 0.1);
 }
 
+/* Sidebar footer section */
 .sidebar-footer {
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   padding-top: 1rem;
 }
 
+/* Status dot animation */
 .status-dot {
   animation: pulse 2s infinite;
 }
 
 @keyframes pulse {
-  0% { opacity: 1; }
-  50% { opacity: 0.5; }
+  0%   { opacity: 1; }
+  50%  { opacity: 0.5; }
   100% { opacity: 1; }
 }
 
-/* Smooth scroll for sidebar */
+/* Smooth scrolling */
 .sidebar {
   scrollbar-width: thin;
   scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
@@ -73,7 +84,7 @@
   background: rgba(255, 255, 255, 0.5);
 }
 
-/* Sidebar Dropdown Submenu */
+/* Sidebar dropdown submenu */
 .sidebar .collapse {
   transition: all 0.3s ease;
 }
@@ -88,7 +99,7 @@
   transform: translateX(4px);
 }
 
-/* Icon dropdown rotation */
+/* Icon rotation when submenu opened */
 .sidebar .nav-link[aria-expanded="true"] .fa-chevron-down {
   transform: rotate(180deg);
   transition: transform 0.3s ease;
