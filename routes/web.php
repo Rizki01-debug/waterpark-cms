@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\User\UserDashboardController;
 use App\Http\Controllers\Admin\FasilitasController;
+use App\Http\Controllers\Admin\ReservasiRegulerController;
 
 // Route login
 Route::get('/', function () {
@@ -18,12 +19,17 @@ Route::middleware(['auth', 'user'])->group(function () {
 
 // Route Admin (Backend)
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(function () {
+
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
+
     Route::resource('fasilitas', FasilitasController::class);
+
+    Route::resource('reservasi/reguler', ReservasiRegulerController::class)
+        ->names('reservasi.reguler');
 });
 
 
-
+// Route bawaan laravel breeze (Laravel Breeze)
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
