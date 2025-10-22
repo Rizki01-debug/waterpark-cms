@@ -7,7 +7,7 @@
   <div class="card bg-gray-900 border-0 shadow-lg rounded-3 p-4">
     {{-- Header --}}
     <div class="d-flex justify-content-between align-items-center mb-4">
-      <h4 class="text-white mb-0">Edit Tiket Reguler</h4>
+      <h4 class="text-white mb-0"><i class="fas fa-ticket me-2"></i>Edit Tiket Reguler</h4>
       <a href="{{ route('admin.reservasi.reguler.index') }}" class="btn btn-secondary fw-bold">
         <i class="fas fa-arrow-left me-1"></i> KEMBALI
       </a>

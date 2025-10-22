@@ -31,6 +31,8 @@ class ReservasiRegulerController extends Controller
             'status' => 'nullable|boolean',
         ]);
 
+        $validated['diskon'] = $validated['diskon'] ?? 0;
+
         if ($request->hasFile('gambar')) {
             $validated['gambar'] = $request->file('gambar')->store('reservasi_reguler', 'public');
         }
@@ -58,6 +60,8 @@ class ReservasiRegulerController extends Controller
             'gambar' => 'nullable|image|max:2048',
             'status' => 'nullable|boolean',
         ]);
+
+        $validated['diskon'] = $validated['diskon'] ?? 0;
 
         if ($request->hasFile('gambar')) {
             if ($tiket->gambar && Storage::disk('public')->exists($tiket->gambar)) {

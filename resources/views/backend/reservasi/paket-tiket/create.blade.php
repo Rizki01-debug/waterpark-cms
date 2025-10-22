@@ -8,7 +8,7 @@
     
     {{-- Header --}}
     <div class="d-flex justify-content-between align-items-center mb-4">
-      <h4 class="text-white mb-0 fw-semibold">Tambah Paket Tiket</h4>
+      <h4 class="text-white mb-0 fw-semibold"><i class="fas fa-tag me-2"></i>Tambah Paket Tiket</h4>
       <a href="{{ route('admin.reservasi.paket.index') }}" class="btn btn-secondary fw-bold">
         <i class="fas fa-arrow-left me-1"></i> KEMBALI
       </a>

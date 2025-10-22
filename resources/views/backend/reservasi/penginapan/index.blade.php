@@ -1,27 +1,26 @@
 @extends('layouts.backend')
 
-@section('title', 'Reservasi Reguler Tiket')
-@section('page-title', 'Reguler Tiket')
-@section('breadcrumb', 'Reservasi / Reguler Tiket')
+@section('title', 'Reservasi Penginapan')
+@section('page-title', 'Penginapan')
+@section('breadcrumb', 'Penginapan')
 
 @section('content')
 <div class="container-fluid py-4">
-  {{-- Header --}}
   <div class="d-flex justify-content-between align-items-center mb-4">
-    <h4 class="fw-bold text-white"><i class="fas fa-ticket-alt me-2"></i> Daftar Tiket Reguler</h4>
-    <a href="{{ route('admin.reservasi.reguler.create') }}" class="btn btn-danger fw-semibold shadow-sm">
+    <h4 class="fw-bold text-white"><i class="fas fa-bed me-2"></i> Daftar Penginapan</h4>
+    <a href="{{ route('admin.reservasi.penginapan.create') }}" class="btn btn-danger fw-semibold shadow-sm">
       <i class="fas fa-plus me-1"></i> Tambah
     </a>
   </div>
 
-  {{-- Alert Sukses --}}
+  {{-- Alert Success --}}
   @if (session('success'))
     <div class="alert alert-success shadow-sm fw-semibold">
       <i class="fas fa-check-circle me-2"></i>{{ session('success') }}
     </div>
   @endif
 
-  {{-- Tabel Data --}}
+  {{-- Table Container --}}
   <div class="card bg-dark border-0 shadow-sm rounded-4">
     <div class="card-body">
       <div class="table-responsive">
@@ -39,13 +38,13 @@
             </tr>
           </thead>
           <tbody>
-            @forelse ($tiket as $key => $item)
+            @forelse ($penginapan as $key => $item)
               <tr class="align-middle">
-                <td>{{ $tiket->firstItem() + $key }}</td>
+                <td>{{ $penginapan->firstItem() + $key }}</td>
                 <td class="fw-semibold">{{ $item->nama_paket }}</td>
                 <td>
                   @if ($item->gambar)
-                    <img src="{{ asset('storage/' . $item->gambar) }}" width="70" class="rounded shadow-sm">
+                    <img src="{{ asset('storage/' . $item->gambar) }}" alt="gambar" width="70" class="rounded shadow-sm">
                   @else
                     <div class="bg-secondary bg-opacity-25 text-center text-muted rounded py-2" style="width:70px;">No Img</div>
                   @endif
@@ -61,10 +60,10 @@
                   @endif
                 </td>
                 <td class="text-center">
-                  <a href="{{ route('admin.reservasi.reguler.edit', $item->id) }}" class="btn btn-warning btn-sm me-1 text-dark fw-semibold">
+                  <a href="{{ route('admin.reservasi.penginapan.edit', $item->id) }}" class="btn btn-warning btn-sm me-1 text-dark fw-semibold">
                     <i class="fas fa-edit"></i> Edit
                   </a>
-                  <form action="{{ route('admin.reservasi.reguler.destroy', $item->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Hapus tiket ini?')">
+                  <form action="{{ route('admin.reservasi.penginapan.destroy', $item->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Hapus data ini?')">
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="btn btn-danger btn-sm fw-semibold">
@@ -75,7 +74,7 @@
               </tr>
             @empty
               <tr>
-                <td colspan="8" class="text-center py-5 text-muted">Belum ada data tiket reguler</td>
+                <td colspan="8" class="text-center py-5 text-muted">Belum ada data penginapan</td>
               </tr>
             @endforelse
           </tbody>
@@ -84,7 +83,7 @@
 
       {{-- Pagination --}}
       <div class="mt-3 d-flex justify-content-end">
-        {{ $tiket->links('pagination::bootstrap-5') }}
+        {{ $penginapan->links('pagination::bootstrap-5') }}
       </div>
     </div>
   </div>

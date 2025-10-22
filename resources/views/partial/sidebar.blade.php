@@ -47,7 +47,7 @@
         <ul class="nav flex-column">
           <li><a href="{{ route('admin.reservasi.reguler.index') }}" class="nav-link text-white-50 py-1 px-2">• Reguler Tiket</a></li>
           <li><a href="{{ route('admin.reservasi.paket.index') }}" class="nav-link text-white-50 py-1 px-2">• Paket Tiket</a></li>
-          <li><a href="#" class="nav-link text-white-50 py-1 px-2">• Penginapan</a></li>
+          <li><a href="{{ route('admin.reservasi.penginapan.index') }}" class="nav-link text-white-50 py-1 px-2">• Penginapan</a></li>
           <li><a href="#" class="nav-link text-white-50 py-1 px-2">• Pemesanan </a></li>
         </ul>
       </div>

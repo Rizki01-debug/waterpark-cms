@@ -31,6 +31,8 @@ class ReservasiPaketController extends Controller
             'status' => 'boolean'
         ]);
 
+        $validated['diskon'] = $validated['diskon'] ?? 0;
+
         if ($request->hasFile('gambar')) {
             $validated['gambar'] = $request->file('gambar')->store('paket', 'public');
         }
@@ -54,6 +56,8 @@ class ReservasiPaketController extends Controller
             'gambar' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
             'status' => 'boolean'
         ]);
+
+        $validated['diskon'] = $validated['diskon'] ?? 0;
 
         if ($request->hasFile('gambar')) {
             if ($paket->gambar && Storage::disk('public')->exists($paket->gambar)) {
