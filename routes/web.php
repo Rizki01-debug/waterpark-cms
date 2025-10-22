@@ -6,6 +6,8 @@ use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\User\UserDashboardController;
 use App\Http\Controllers\Admin\FasilitasController;
 use App\Http\Controllers\Admin\ReservasiRegulerController;
+use App\Http\Controllers\Admin\ReservasiPaketController;
+
 
 // Route login
 Route::get('/', function () {
@@ -26,6 +28,9 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
 
     Route::resource('reservasi/reguler', ReservasiRegulerController::class)
         ->names('reservasi.reguler');
+
+     Route::resource('reservasi/paket', ReservasiPaketController::class)
+        ->names('reservasi.paket');
 });
 
 
