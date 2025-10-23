@@ -1,65 +1,67 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use App\Models\Pemesanan;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Pemesanan;
+use Illuminate\Support\Facades\Storage;
 
 class PemesananController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * 🔹 Menampilkan daftar pemesanan
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $search = $request->query('search');
+
+        $pemesanans = Pemesanan::when($search, function ($query, $search) {
+                $query->where('nama_pemesan', 'like', "%{$search}%");
+            })
+            ->orderByDesc('id')
+            ->paginate(10);
+
+        return view('backend.reservasi.pemesanan.index', compact('pemesanans', 'search'));
     }
 
     /**
-     * Show the form for creating a new resource.
+     * 🔹 Menampilkan detail pemesanan (AJAX / Modal)
      */
-    public function create()
+    public function show($id)
     {
-        //
+        $pemesanan = Pemesanan::with('tiket')->findOrFail($id);
+        return response()->json($pemesanan);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * 🔹 Update status pemesanan (Setujui / Tolak)
      */
-    public function store(Request $request)
+    public function updateStatus(Request $request, $id)
     {
-        //
+        $validated = $request->validate([
+            'status' => 'required|in:Konfirmasi,Batal,Berhasil',
+        ]);
+
+        $pemesanan = Pemesanan::findOrFail($id);
+        $pemesanan->update(['status' => $validated['status']]);
+
+        return redirect()->back()->with('success', '✅ Status pemesanan berhasil diperbarui!');
     }
 
     /**
-     * Display the specified resource.
+     * 🔹 Hapus data pemesanan
      */
-    public function show(Pemesanan $pemesanan)
+    public function destroy($id)
     {
-        //
-    }
+        $pemesanan = Pemesanan::findOrFail($id);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Pemesanan $pemesanan)
-    {
-        //
-    }
+        if ($pemesanan->bukti_pembayaran) {
+            Storage::disk('public')->delete($pemesanan->bukti_pembayaran);
+        }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Pemesanan $pemesanan)
-    {
-        //
-    }
+        $pemesanan->delete();
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Pemesanan $pemesanan)
-    {
-        //
+        return redirect()->back()->with('success', '🗑️ Data pemesanan berhasil dihapus!');
     }
 }
