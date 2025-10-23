@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\FasilitasController;
 use App\Http\Controllers\Admin\ReservasiRegulerController;
 use App\Http\Controllers\Admin\ReservasiPaketController;
 use App\Http\Controllers\Admin\ReservasiPenginapanController;
+use App\Http\Controllers\Admin\BlogNewsController;
 
 // Backend (Reservasi)
 use App\Http\Controllers\Admin\PemesananController;
@@ -50,6 +51,16 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     |--------------------------------------------
     */
     Route::resource('fasilitas', FasilitasController::class);
+
+    /*
+    |--------------------------------------------
+    | Management Blog & News
+    |--------------------------------------------
+    */
+      Route::prefix('blog')->name('blog.')->group(function () {
+        Route::resource('news', BlogNewsController::class);
+    });
+
 
     /*
     |--------------------------------------------

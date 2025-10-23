@@ -62,7 +62,7 @@
       </a>
       <div class="collapse ms-4" id="submenuBlog">
         <ul class="nav flex-column">
-          <li><a href="#" class="nav-link text-white-50 py-1 px-2">• News </a></li>
+          <li><a href="{{ route('admin.blog.news.index') }}" class="nav-link text-white-50 py-1 px-2">• News </a></li>
           <li><a href="#" class="nav-link text-white-50 py-1 px-2">• Events </a></li>
         </ul>
       </div>
