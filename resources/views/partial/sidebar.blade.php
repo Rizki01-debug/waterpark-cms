@@ -63,9 +63,16 @@
       <div class="collapse ms-4" id="submenuBlog">
         <ul class="nav flex-column">
           <li><a href="{{ route('admin.blog.news.index') }}" class="nav-link text-white-50 py-1 px-2">• News </a></li>
-          <li><a href="#" class="nav-link text-white-50 py-1 px-2">• Events </a></li>
+          <li><a href="{{ route('admin.blog.events.index') }}" class="nav-link text-white-50 py-1 px-2">• Events </a></li>
         </ul>
       </div>
+    </li>
+
+      <li class="nav-item mb-1">
+      <a href="" class="nav-link d-flex align-items-center text-white py-2 px-3 rounded-3 sidebar-link">
+        <i class="fas fa-bullhorn me-3 fs-5"></i>
+        <span>Promo Banner</span>
+      </a>
     </li>
 
     <!-- System -->

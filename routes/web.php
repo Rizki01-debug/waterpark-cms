@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\ReservasiRegulerController;
 use App\Http\Controllers\Admin\ReservasiPaketController;
 use App\Http\Controllers\Admin\ReservasiPenginapanController;
 use App\Http\Controllers\Admin\BlogNewsController;
+use App\Http\Controllers\Admin\BlogEventController;
 
 // Backend (Reservasi)
 use App\Http\Controllers\Admin\PemesananController;
@@ -59,6 +60,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     */
       Route::prefix('blog')->name('blog.')->group(function () {
         Route::resource('news', BlogNewsController::class);
+         Route::resource('events', BlogEventController::class);
     });
 
 
