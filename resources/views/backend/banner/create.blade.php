@@ -1,8 +1,8 @@
 @extends('layouts.backend')
 
-@section('title', 'Tambah Event')
-@section('page-title', 'Tambah Event')
-@section('breadcrumb', 'Blog / Events / Tambah')
+@section('title', 'Tambah Banner')
+@section('page-title', 'Tambah Banner')
+@section('breadcrumb', 'Promo / Banner / Tambah')
 
 @section('content')
 <div class="container py-4">
@@ -10,8 +10,8 @@
 
     {{-- Header --}}
     <div class="d-flex justify-content-between align-items-center mb-4">
-      <h4 class="text-white mb-0"><i class="fas fa-calendar-plus me-2"></i> Tambah Event Baru</h4>
-      <a href="{{ route('admin.blog.events.index') }}" class="btn btn-outline-light fw-bold">
+      <h4 class="text-white mb-0"><i class="fas fa-bullhorn me-2"></i> Tambah Banner</h4>
+      <a href="{{ route('admin.banner.index') }}" class="btn btn-outline-light fw-bold">
         <i class="fas fa-arrow-left me-1"></i> Kembali
       </a>
     </div>
@@ -28,36 +28,24 @@
     @endif
 
     {{-- Form Create --}}
-    <form action="{{ route('admin.blog.events.store') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('admin.banner.store') }}" method="POST" enctype="multipart/form-data">
       @csrf
 
-      {{-- Judul Event --}}
+      {{-- Judul Banner --}}
       <div class="mb-3">
-        <label class="form-label text-white fw-semibold">Judul Event</label>
-        <input type="text" name="judul" value="{{ old('judul') }}" class="form-control bg-dark text-white border-secondary" required placeholder="Masukkan judul event">
+        <label class="form-label text-white fw-semibold">Judul Banner</label>
+        <input type="text" name="judul" value="{{ old('judul') }}" class="form-control bg-dark text-white border-secondary" required placeholder="Masukkan judul banner">
       </div>
 
       {{-- Deskripsi --}}
       <div class="mb-3">
         <label class="form-label text-white fw-semibold">Deskripsi</label>
-        <textarea name="deskripsi" class="form-control bg-dark text-white border-secondary" rows="4" placeholder="Masukkan deskripsi event">{{ old('deskripsi') }}</textarea>
-      </div>
-
-      {{-- Lokasi & Tanggal --}}
-      <div class="row g-3">
-        <div class="col-md-6">
-          <label class="form-label text-white fw-semibold">Lokasi</label>
-          <input type="text" name="lokasi" value="{{ old('lokasi') }}" class="form-control bg-dark text-white border-secondary" required placeholder="Contoh: Waterpark Embun Pelangi">
-        </div>
-        <div class="col-md-6">
-          <label class="form-label text-white fw-semibold">Tanggal Event</label>
-          <input type="date" name="tanggal" value="{{ old('tanggal') }}" class="form-control bg-dark text-white border-secondary" required>
-        </div>
+        <textarea name="deskripsi" class="form-control bg-dark text-white border-secondary" rows="4" placeholder="Masukkan deskripsi banner">{{ old('deskripsi') }}</textarea>
       </div>
 
       {{-- Upload Gambar --}}
-      <div class="mb-3 mt-3">
-        <label class="form-label text-white fw-semibold">Gambar Event</label>
+      <div class="mb-3">
+        <label class="form-label text-white fw-semibold">Gambar Banner</label>
         <input type="file" name="gambar" id="gambarInput" class="form-control bg-dark text-white border-secondary">
         <small class="text-muted">Format: JPG, PNG, JPEG (maks. 2MB)</small>
 
@@ -66,18 +54,12 @@
       </div>
 
       {{-- Status --}}
-      <div class="mb-3">
+      <div class="mb-4">
         <label class="form-label text-white fw-semibold">Status</label>
         <select name="status" class="form-select bg-dark text-white border-secondary">
-          <option value="Publish" selected>Publish</option>
-          <option value="Draft">Draft</option>
+          <option value="1" selected>Aktif</option>
+          <option value="0">Nonaktif</option>
         </select>
-      </div>
-
-      {{-- Penulis --}}
-      <div class="mb-3">
-        <label class="form-label text-white fw-semibold">Penulis</label>
-        <input type="text" name="penulis" value="{{ old('penulis') ?? Auth::user()->name }}" class="form-control bg-dark text-white border-secondary" readonly>
       </div>
 
       {{-- Tombol --}}
@@ -85,7 +67,7 @@
         <button type="submit" class="btn btn-danger fw-bold px-4">
           <i class="fas fa-save me-1"></i> Simpan
         </button>
-        <a href="{{ route('admin.blog.events.index') }}" class="btn btn-outline-light px-4 fw-semibold">
+        <a href="{{ route('admin.banner.index') }}" class="btn btn-outline-light px-4 fw-semibold">
           <i class="fas fa-times me-1"></i> Batal
         </a>
       </div>
@@ -93,7 +75,7 @@
   </div>
 </div>
 
-{{-- Preview Gambar --}}
+{{-- Script Preview Gambar --}}
 @push('scripts')
 <script>
   document.getElementById('gambarInput').addEventListener('change', function(event) {

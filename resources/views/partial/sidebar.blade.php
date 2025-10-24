@@ -69,7 +69,7 @@
     </li>
 
       <li class="nav-item mb-1">
-      <a href="" class="nav-link d-flex align-items-center text-white py-2 px-3 rounded-3 sidebar-link">
+      <a href="{{ route('admin.banner.index') }}" class="nav-link d-flex align-items-center text-white py-2 px-3 rounded-3 sidebar-link">
         <i class="fas fa-bullhorn me-3 fs-5"></i>
         <span>Promo Banner</span>
       </a>

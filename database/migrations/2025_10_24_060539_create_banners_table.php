@@ -9,13 +9,18 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
-    {
-        Schema::create('banners', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-        });
-    }
+    public function up()
+{
+    Schema::create('banners', function (Blueprint $table) {
+        $table->id();
+        $table->string('judul');
+        $table->text('deskripsi')->nullable();
+        $table->string('gambar')->nullable();
+        $table->boolean('status')->default(true); // aktif / nonaktif
+        $table->timestamps();
+    });
+}
+
 
     /**
      * Reverse the migrations.

@@ -1,8 +1,8 @@
 @extends('layouts.backend')
 
-@section('title', 'Edit Event')
-@section('page-title', 'Edit Event')
-@section('breadcrumb', 'Blog / Events / Edit')
+@section('title', 'Edit Banner')
+@section('page-title', 'Edit Banner')
+@section('breadcrumb', 'Promo / Banner / Edit')
 
 @section('content')
 <div class="container py-4">
@@ -10,8 +10,8 @@
 
     {{-- Header --}}
     <div class="d-flex justify-content-between align-items-center mb-4">
-      <h4 class="text-white mb-0"><i class="fas fa-edit me-2"></i> Edit Event</h4>
-      <a href="{{ route('admin.blog.events.index') }}" class="btn btn-outline-light fw-bold">
+      <h4 class="text-white mb-0"><i class="fas fa-edit me-2"></i> Edit Banner</h4>
+      <a href="{{ route('admin.banner.index') }}" class="btn btn-outline-light fw-bold">
         <i class="fas fa-arrow-left me-1"></i> Kembali
       </a>
     </div>
@@ -28,45 +28,33 @@
     @endif
 
     {{-- Form Edit --}}
-    <form action="{{ route('admin.blog.events.update', $event->id) }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('admin.banner.update', $banner->id) }}" method="POST" enctype="multipart/form-data">
       @csrf
       @method('PUT')
 
-      {{-- Judul Event --}}
+      {{-- Judul Banner --}}
       <div class="mb-3">
-        <label class="form-label text-white fw-semibold">Judul Event</label>
-        <input type="text" name="judul" value="{{ old('judul', $event->judul) }}" class="form-control bg-dark text-white border-secondary" required>
+        <label class="form-label text-white fw-semibold">Judul Banner</label>
+        <input type="text" name="judul" value="{{ old('judul', $banner->judul) }}" class="form-control bg-dark text-white border-secondary" required>
       </div>
 
       {{-- Deskripsi --}}
       <div class="mb-3">
         <label class="form-label text-white fw-semibold">Deskripsi</label>
-        <textarea name="deskripsi" class="form-control bg-dark text-white border-secondary" rows="4">{{ old('deskripsi', $event->deskripsi) }}</textarea>
-      </div>
-
-      {{-- Lokasi & Tanggal --}}
-      <div class="row g-3">
-        <div class="col-md-6">
-          <label class="form-label text-white fw-semibold">Lokasi</label>
-          <input type="text" name="lokasi" value="{{ old('lokasi', $event->lokasi) }}" class="form-control bg-dark text-white border-secondary">
-        </div>
-        <div class="col-md-6">
-          <label class="form-label text-white fw-semibold">Tanggal Event</label>
-          <input type="date" name="tanggal" value="{{ old('tanggal', $event->tanggal) }}" class="form-control bg-dark text-white border-secondary">
-        </div>
+        <textarea name="deskripsi" class="form-control bg-dark text-white border-secondary" rows="4">{{ old('deskripsi', $banner->deskripsi) }}</textarea>
       </div>
 
       {{-- Upload Gambar --}}
-      <div class="mb-3 mt-3">
-        <label class="form-label text-white fw-semibold">Gambar Event</label>
+      <div class="mb-3">
+        <label class="form-label text-white fw-semibold">Gambar Banner</label>
         <input type="file" name="gambar" id="gambarInput" class="form-control bg-dark text-white border-secondary">
         <small class="text-muted">Kosongkan jika tidak ingin mengubah gambar</small>
 
         {{-- Gambar Lama --}}
-        @if ($event->gambar)
+        @if ($banner->gambar)
           <div class="mt-3">
             <p class="text-white-50 small mb-2">Gambar Saat Ini:</p>
-            <img src="{{ asset('storage/'.$event->gambar) }}" alt="gambar" width="180" class="rounded shadow-sm">
+            <img src="{{ asset('storage/'.$banner->gambar) }}" alt="gambar" width="180" class="rounded shadow-sm">
           </div>
         @endif
 
@@ -75,11 +63,11 @@
       </div>
 
       {{-- Status --}}
-      <div class="mb-3">
+      <div class="mb-4">
         <label class="form-label text-white fw-semibold">Status</label>
         <select name="status" class="form-select bg-dark text-white border-secondary">
-          <option value="Publish" {{ $event->status == 'Publish' ? 'selected' : '' }}>Publish</option>
-          <option value="Draft" {{ $event->status == 'Draft' ? 'selected' : '' }}>Draft</option>
+          <option value="1" {{ $banner->status ? 'selected' : '' }}>Aktif</option>
+          <option value="0" {{ !$banner->status ? 'selected' : '' }}>Nonaktif</option>
         </select>
       </div>
 
@@ -88,7 +76,7 @@
         <button type="submit" class="btn btn-danger fw-bold px-4">
           <i class="fas fa-save me-1"></i> Update
         </button>
-        <a href="{{ route('admin.blog.events.index') }}" class="btn btn-outline-light px-4 fw-semibold">
+        <a href="{{ route('admin.banner.index') }}" class="btn btn-outline-light px-4 fw-semibold">
           <i class="fas fa-times me-1"></i> Batal
         </a>
       </div>
@@ -96,7 +84,7 @@
   </div>
 </div>
 
-{{-- Preview Gambar --}}
+{{-- Script Preview Gambar --}}
 @push('scripts')
 <script>
   document.getElementById('gambarInput').addEventListener('change', function(event) {
