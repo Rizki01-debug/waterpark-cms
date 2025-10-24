@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\ReservasiPenginapanController;
 use App\Http\Controllers\Admin\BlogNewsController;
 use App\Http\Controllers\Admin\BlogEventController;
 use App\Http\Controllers\Admin\BannerController;
+use App\Http\Controllers\Admin\UserAdminController;
 
 // Backend (Reservasi)
 use App\Http\Controllers\Admin\PemesananController;
@@ -70,6 +71,18 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     |--------------------------------------------
     */
     Route::resource('banner', BannerController::class);
+
+    /*
+    |--------------------------------------------
+    | Management Admin
+    |--------------------------------------------
+    */
+// System -> Tambah Admin
+Route::prefix('system')->name('system.')->group(function () {
+    Route::resource('admins', UserAdminController::class)
+        ->names('admins');
+});
+
 
 
     /*
