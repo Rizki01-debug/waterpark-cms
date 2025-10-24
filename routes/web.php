@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\BlogNewsController;
 use App\Http\Controllers\Admin\BlogEventController;
 use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\UserAdminController;
+use App\Http\Controllers\Admin\userController;
 
 // Backend (Reservasi)
 use App\Http\Controllers\Admin\PemesananController;
@@ -101,6 +102,15 @@ Route::prefix('system')->name('system.')->group(function () {
         Route::put('/pemesanan/{id}/status', [PemesananController::class, 'updateStatus'])->name('pemesanan.updateStatus');
         Route::delete('/pemesanan/{id}', [PemesananController::class, 'destroy'])->name('pemesanan.destroy');
     });
+
+    /*
+    |--------------------------------------------
+    | Management Users
+    |--------------------------------------------
+    */
+    Route::get('/users', [UserController::class, 'index'])->name('users.index');
+    Route::patch('/users/{id}/toggle-status', [UserController::class, 'toggleStatus'])->name('users.toggleStatus');
+    Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
 });
 
 /*
