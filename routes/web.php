@@ -119,9 +119,8 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
         Route::resource('kontak-lokasi', KontakLokasiController::class)->names('kontak');
 
         // Tab 3: Sosial Media
-        Route::get('/sosial-media', [SosialMediaController::class, 'index'])->name('sosial.index');
-        Route::post('/sosial-media', [SosialMediaController::class, 'store'])->name('sosial.store');
-        Route::delete('/sosial-media', [SosialMediaController::class, 'destroy'])->name('sosial.destroy');
+        Route::resource('sosial-media', SosialMediaController::class)->names('sosial');
+
     });
 });
 

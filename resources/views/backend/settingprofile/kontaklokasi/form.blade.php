@@ -23,13 +23,4 @@
     <label class="form-label text-white fw-semibold">Jam Operasional</label>
     <input type="text" name="jam_operasional" class="form-control bg-dark text-white border-secondary" placeholder="07:00 - 17:30" value="{{ old('jam_operasional', $kontak->jam_operasional ?? '') }}">
   </div>
-
-  <div class="col-md-12 d-flex justify-content-start gap-2 mt-3">
-    <button type="submit" class="btn btn-success px-4">
-      <i class="fas fa-save me-2"></i> Simpan Perubahan
-    </button>
-    <a href="{{ route('admin.settingprofile.kontak.index') }}" class="btn btn-secondary px-4">
-      <i class="fas fa-undo me-2"></i> Kembali
-    </a>
-  </div>
 </div>

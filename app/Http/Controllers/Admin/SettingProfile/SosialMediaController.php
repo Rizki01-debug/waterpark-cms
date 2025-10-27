@@ -14,28 +14,52 @@ class SosialMediaController extends Controller
         return view('backend.settingprofile.sosialmedia.index', compact('social'));
     }
 
+    public function create()
+    {
+        return view('backend.settingprofile.sosialmedia.create');
+    }
+
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'facebook' => 'nullable|url',
-            'instagram' => 'nullable|url',
-            'tiktok' => 'nullable|url',
-            'youtube' => 'nullable|url',
+            'instagram' => 'nullable|url|max:255',
+            'facebook' => 'nullable|url|max:255',
+            'tiktok' => 'nullable|url|max:255',
+            'youtube' => 'nullable|url|max:255',
         ]);
 
-        $social = CompanySocial::first() ?? new CompanySocial();
-        $social->fill($validated)->save();
+        CompanySocial::updateOrCreate(['id' => 1], $validated);
 
-        return back()->with('success', 'Sosial media berhasil disimpan!');
+        return redirect()->route('admin.settingprofile.sosial.index')
+            ->with('success', 'Data sosial media berhasil disimpan!');
     }
 
-    public function destroy()
+    public function edit(string $id)
     {
-        $social = CompanySocial::first();
-        if ($social) {
-            $social->delete();
-        }
+        $social = CompanySocial::findOrFail($id);
+        return view('backend.settingprofile.sosialmedia.edit', compact('social'));
+    }
 
-        return back()->with('success', 'Data sosial media berhasil dihapus!');
+    public function update(Request $request, string $id)
+    {
+        $validated = $request->validate([
+            'instagram' => 'nullable|url|max:255',
+            'facebook' => 'nullable|url|max:255',
+            'tiktok' => 'nullable|url|max:255',
+            'youtube' => 'nullable|url|max:255',
+        ]);
+
+        $social = CompanySocial::findOrFail($id);
+        $social->update($validated);
+
+        return redirect()->route('admin.settingprofile.sosial.index')
+            ->with('success', 'Data sosial media berhasil diperbarui!');
+    }
+
+    public function destroy(string $id)
+    {
+        CompanySocial::findOrFail($id)->delete();
+
+        return redirect()->back()->with('success', 'Data sosial media berhasil dihapus!');
     }
 }
