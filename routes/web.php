@@ -14,6 +14,8 @@ use App\Http\Controllers\Admin\BlogEventController;
 use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\UserAdminController;
 use App\Http\Controllers\Admin\UserController;
+
+// Setting Profile Controllers
 use App\Http\Controllers\Admin\SettingProfile\IdentitasDasarController;
 use App\Http\Controllers\Admin\SettingProfile\KontakLokasiController;
 use App\Http\Controllers\Admin\SettingProfile\SosialMediaController;
@@ -50,24 +52,48 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     // Dashboard Admin
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
 
-    // Management Fasilitas
+    /*
+    |--------------------------------------------
+    | Management Fasilitas
+    |--------------------------------------------
+    */
     Route::resource('fasilitas', FasilitasController::class);
 
-    // Blog News & Events
+    /*
+    |--------------------------------------------
+    | Management Blog (News & Events)
+    |--------------------------------------------
+    */
     Route::prefix('blog')->name('blog.')->group(function () {
         Route::resource('news', BlogNewsController::class);
         Route::resource('events', BlogEventController::class);
     });
 
-    // Banner
+    /*
+    |--------------------------------------------
+    | Management Banner
+    |--------------------------------------------
+    */
     Route::resource('banner', BannerController::class);
 
-    // Tambah Admin
+    /*
+    |--------------------------------------------
+    | Management Admin & User
+    |--------------------------------------------
+    */
     Route::prefix('system')->name('system.')->group(function () {
         Route::resource('admins', UserAdminController::class)->names('admins');
     });
 
-    // Reservasi
+    Route::get('/users', [UserController::class, 'index'])->name('users.index');
+    Route::patch('/users/{id}/toggle-status', [UserController::class, 'toggleStatus'])->name('users.toggleStatus');
+    Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
+
+    /*
+    |--------------------------------------------
+    | Management Reservasi
+    |--------------------------------------------
+    */
     Route::prefix('reservasi')->name('reservasi.')->group(function () {
         Route::resource('reguler', ReservasiRegulerController::class)->names('reguler');
         Route::resource('paket', ReservasiPaketController::class)->names('paket');
@@ -80,48 +106,25 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
         Route::delete('/pemesanan/{id}', [PemesananController::class, 'destroy'])->name('pemesanan.destroy');
     });
 
-    // Akun User
-    Route::get('/users', [UserController::class, 'index'])->name('users.index');
-    Route::patch('/users/{id}/toggle-status', [UserController::class, 'toggleStatus'])->name('users.toggleStatus');
-    Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
-
-    // Setting Profile Perusahaan
+    /*
+    |--------------------------------------------
+    | Setting Profile Perusahaan (Tab 1, 2, 3)
+    |--------------------------------------------
+    */
     Route::prefix('setting-profile')->name('settingprofile.')->group(function () {
-        Route::get('/identitas-dasar', [IdentitasDasarController::class, 'index'])->name('identitas.index');
-        Route::post('/identitas-dasar', [IdentitasDasarController::class, 'store'])->name('identitas.store');
-        Route::delete('/identitas-dasar', [IdentitasDasarController::class, 'destroy'])->name('identitas.destroy');
+        // Tab 1: Identitas Dasar (CRUD)
+        Route::resource('identitas-dasar', IdentitasDasarController::class)->names('identitas');
+
+        // Tab 2: Kontak & Lokasi
+        Route::get('/kontak-lokasi', [KontakLokasiController::class, 'index'])->name('kontak.index');
+        Route::post('/kontak-lokasi', [KontakLokasiController::class, 'store'])->name('kontak.store');
+        Route::delete('/kontak-lokasi', [KontakLokasiController::class, 'destroy'])->name('kontak.destroy');
+
+        // Tab 3: Sosial Media
+        Route::get('/sosial-media', [SosialMediaController::class, 'index'])->name('sosial.index');
+        Route::post('/sosial-media', [SosialMediaController::class, 'store'])->name('sosial.store');
+        Route::delete('/sosial-media', [SosialMediaController::class, 'destroy'])->name('sosial.destroy');
     });
-
-    Route::prefix('setting-profile')->name('settingprofile.')->group(function () {
-    // Identitas Dasar
-    Route::get('/identitas-dasar', [IdentitasDasarController::class, 'index'])->name('identitas.index');
-    Route::post('/identitas-dasar', [IdentitasDasarController::class, 'store'])->name('identitas.store');
-    Route::delete('/identitas-dasar', [IdentitasDasarController::class, 'destroy'])->name('identitas.destroy');
-
-    // Kontak & Lokasi
-    Route::get('/kontak-lokasi', [KontakLokasiController::class, 'index'])->name('kontak.index');
-    Route::post('/kontak-lokasi', [KontakLokasiController::class, 'store'])->name('kontak.store');
-    Route::delete('/kontak-lokasi', [KontakLokasiController::class, 'destroy'])->name('kontak.destroy');
-    });
-
-    Route::prefix('setting-profile')->name('settingprofile.')->group(function () {
-    // Identitas Dasar
-    Route::get('/identitas-dasar', [IdentitasDasarController::class, 'index'])->name('identitas.index');
-    Route::post('/identitas-dasar', [IdentitasDasarController::class, 'store'])->name('identitas.store');
-    Route::delete('/identitas-dasar', [IdentitasDasarController::class, 'destroy'])->name('identitas.destroy');
-
-    // Kontak & Lokasi
-    Route::get('/kontak-lokasi', [KontakLokasiController::class, 'index'])->name('kontak.index');
-    Route::post('/kontak-lokasi', [KontakLokasiController::class, 'store'])->name('kontak.store');
-    Route::delete('/kontak-lokasi', [KontakLokasiController::class, 'destroy'])->name('kontak.destroy');
-
-    // Sosial Media
-    Route::get('/sosial-media', [SosialMediaController::class, 'index'])->name('sosial.index');
-    Route::post('/sosial-media', [SosialMediaController::class, 'store'])->name('sosial.store');
-    Route::delete('/sosial-media', [SosialMediaController::class, 'destroy'])->name('sosial.destroy');
-    });
-
-
 });
 
 /*

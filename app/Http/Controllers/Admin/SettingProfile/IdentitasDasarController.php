@@ -9,12 +9,20 @@ use Illuminate\Support\Facades\Storage;
 
 class IdentitasDasarController extends Controller
 {
+    // Menampilkan semua data profil
     public function index()
     {
-        $profile = CompanyProfile::first();
-        return view('backend.settingprofile.identitasdasar.index', compact('profile'));
+        $profiles = CompanyProfile::latest()->paginate(10);
+        return view('backend.settingprofile.identitasdasar.index', compact('profiles'));
     }
 
+    // Halaman tambah data
+    public function create()
+    {
+        return view('backend.settingprofile.identitasdasar.create');
+    }
+
+    // Simpan data baru
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -27,7 +35,38 @@ class IdentitasDasarController extends Controller
             'favicon' => 'nullable|image|mimes:jpg,jpeg,png,ico|max:1024',
         ]);
 
-        $profile = CompanyProfile::first() ?? new CompanyProfile();
+        foreach (['logo_nav', 'logo_footer', 'favicon'] as $field) {
+            if ($request->hasFile($field)) {
+                $validated[$field] = $request->file($field)->store('uploads/profile', 'public');
+            }
+        }
+
+        CompanyProfile::create($validated);
+        return redirect()->route('admin.settingprofile.identitas.index')
+            ->with('success', 'Data identitas dasar berhasil ditambahkan!');
+    }
+
+    // Halaman edit data
+    public function edit($id)
+    {
+        $profile = CompanyProfile::findOrFail($id);
+        return view('backend.settingprofile.identitasdasar.edit', compact('profile'));
+    }
+
+    // Update data
+    public function update(Request $request, $id)
+    {
+        $profile = CompanyProfile::findOrFail($id);
+
+        $validated = $request->validate([
+            'nama' => 'required|string|max:255',
+            'tagline' => 'nullable|string|max:255',
+            'deskripsi' => 'nullable|string',
+            'tanggal_berdiri' => 'nullable|date',
+            'logo_nav' => 'nullable|image|mimes:jpg,jpeg,png,svg|max:2048',
+            'logo_footer' => 'nullable|image|mimes:jpg,jpeg,png,svg|max:2048',
+            'favicon' => 'nullable|image|mimes:jpg,jpeg,png,ico|max:1024',
+        ]);
 
         foreach (['logo_nav', 'logo_footer', 'favicon'] as $field) {
             if ($request->hasFile($field)) {
@@ -38,23 +77,24 @@ class IdentitasDasarController extends Controller
             }
         }
 
-        $profile->fill($validated)->save();
-
-        return back()->with('success', 'Identitas dasar berhasil disimpan!');
+        $profile->update($validated);
+        return redirect()->route('admin.settingprofile.identitas.index')
+            ->with('success', 'Data identitas dasar berhasil diperbarui!');
     }
 
-    public function destroy()
+    // Hapus data
+    public function destroy($id)
     {
-        $profile = CompanyProfile::first();
-        if ($profile) {
-            foreach (['logo_nav', 'logo_footer', 'favicon'] as $field) {
-                if ($profile->$field) {
-                    Storage::disk('public')->delete($profile->$field);
-                }
+        $profile = CompanyProfile::findOrFail($id);
+
+        foreach (['logo_nav', 'logo_footer', 'favicon'] as $field) {
+            if ($profile->$field) {
+                Storage::disk('public')->delete($profile->$field);
             }
-            $profile->delete();
         }
 
-        return back()->with('success', 'Data berhasil dihapus!');
+        $profile->delete();
+        return redirect()->route('admin.settingprofile.identitas.index')
+            ->with('success', 'Data identitas dasar berhasil dihapus!');
     }
 }
