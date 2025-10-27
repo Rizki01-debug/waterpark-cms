@@ -116,9 +116,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
         Route::resource('identitas-dasar', IdentitasDasarController::class)->names('identitas');
 
         // Tab 2: Kontak & Lokasi
-        Route::get('/kontak-lokasi', [KontakLokasiController::class, 'index'])->name('kontak.index');
-        Route::post('/kontak-lokasi', [KontakLokasiController::class, 'store'])->name('kontak.store');
-        Route::delete('/kontak-lokasi', [KontakLokasiController::class, 'destroy'])->name('kontak.destroy');
+        Route::resource('kontak-lokasi', KontakLokasiController::class)->names('kontak');
 
         // Tab 3: Sosial Media
         Route::get('/sosial-media', [SosialMediaController::class, 'index'])->name('sosial.index');

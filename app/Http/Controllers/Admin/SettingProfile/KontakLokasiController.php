@@ -10,33 +10,66 @@ class KontakLokasiController extends Controller
 {
     public function index()
     {
-        $contact = CompanyContact::first();
-        return view('backend.settingprofile.kontaklokasi.index', compact('contact'));
+        $kontak = CompanyContact::first();
+        return view('backend.settingprofile.kontaklokasi.index', compact('kontak'));
+    }
+
+    public function create()
+    {
+        return view('backend.settingprofile.kontaklokasi.create');
     }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'alamat' => 'nullable|string|max:255',
-            'telepon' => 'nullable|string|max:20',
-            'email' => 'nullable|email|max:255',
+            'alamat' => 'required|string|max:255',
+            'telepon' => 'nullable|string|max:50',
+            'email' => 'nullable|email|max:100',
             'google_maps' => 'nullable|string',
-            'jam_operasional' => 'nullable|string|max:50',
+            'jam_operasional' => 'nullable|string|max:100',
         ]);
 
-        $contact = CompanyContact::first() ?? new CompanyContact();
-        $contact->fill($validated)->save();
+        CompanyContact::updateOrCreate(['id' => 1], $validated);
 
-        return back()->with('success', 'Kontak & Lokasi berhasil disimpan!');
+        return redirect()->route('admin.settingprofile.kontak.index')
+            ->with('success', 'Kontak & lokasi berhasil disimpan!');
     }
 
-    public function destroy()
+    public function show(string $id)
     {
-        $contact = CompanyContact::first();
-        if ($contact) {
-            $contact->delete();
-        }
+        $kontak = CompanyContact::findOrFail($id);
+        return view('backend.settingprofile.kontaklokasi.show', compact('kontak'));
+    }
 
-        return back()->with('success', 'Data kontak & lokasi berhasil dihapus!');
+    public function edit(string $id)
+    {
+        $kontak = CompanyContact::findOrFail($id);
+        return view('backend.settingprofile.kontaklokasi.edit', compact('kontak'));
+    }
+
+    public function update(Request $request, string $id)
+    {
+        $validated = $request->validate([
+            'alamat' => 'required|string|max:255',
+            'telepon' => 'nullable|string|max:50',
+            'email' => 'nullable|email|max:100',
+            'google_maps' => 'nullable|string',
+            'jam_operasional' => 'nullable|string|max:100',
+        ]);
+
+        $kontak = CompanyContact::findOrFail($id);
+        $kontak->update($validated);
+
+        return redirect()->route('admin.settingprofile.kontak.index')
+            ->with('success', 'Kontak & lokasi berhasil diperbarui!');
+    }
+
+    public function destroy(string $id)
+    {
+        $kontak = CompanyContact::findOrFail($id);
+        $kontak->delete();
+
+        return redirect()->route('admin.settingprofile.kontak.index')
+            ->with('success', 'Data berhasil dihapus.');
     }
 }
