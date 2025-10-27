@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\UserAdminController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\SettingProfile\IdentitasDasarController;
 use App\Http\Controllers\Admin\SettingProfile\KontakLokasiController;
+use App\Http\Controllers\Admin\SettingProfile\SosialMediaController;
 
 // Backend (Reservasi)
 use App\Http\Controllers\Admin\PemesananController;
@@ -101,7 +102,24 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     Route::get('/kontak-lokasi', [KontakLokasiController::class, 'index'])->name('kontak.index');
     Route::post('/kontak-lokasi', [KontakLokasiController::class, 'store'])->name('kontak.store');
     Route::delete('/kontak-lokasi', [KontakLokasiController::class, 'destroy'])->name('kontak.destroy');
-});
+    });
+
+    Route::prefix('setting-profile')->name('settingprofile.')->group(function () {
+    // Identitas Dasar
+    Route::get('/identitas-dasar', [IdentitasDasarController::class, 'index'])->name('identitas.index');
+    Route::post('/identitas-dasar', [IdentitasDasarController::class, 'store'])->name('identitas.store');
+    Route::delete('/identitas-dasar', [IdentitasDasarController::class, 'destroy'])->name('identitas.destroy');
+
+    // Kontak & Lokasi
+    Route::get('/kontak-lokasi', [KontakLokasiController::class, 'index'])->name('kontak.index');
+    Route::post('/kontak-lokasi', [KontakLokasiController::class, 'store'])->name('kontak.store');
+    Route::delete('/kontak-lokasi', [KontakLokasiController::class, 'destroy'])->name('kontak.destroy');
+
+    // Sosial Media
+    Route::get('/sosial-media', [SosialMediaController::class, 'index'])->name('sosial.index');
+    Route::post('/sosial-media', [SosialMediaController::class, 'store'])->name('sosial.store');
+    Route::delete('/sosial-media', [SosialMediaController::class, 'destroy'])->name('sosial.destroy');
+    });
 
 
 });
