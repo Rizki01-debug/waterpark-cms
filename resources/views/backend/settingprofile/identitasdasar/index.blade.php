@@ -12,7 +12,7 @@
     <a href="{{ route('admin.settingprofile.identitas.index') }}" class="btn btn-danger fw-semibold shadow-sm me-2">
       <i class="fas fa-id-card me-1"></i> Identitas Dasar
     </a>
-    <a href="#" class="btn btn-outline-light fw-semibold shadow-sm me-2">
+    <a href="{{ route('admin.settingprofile.kontak.index') }}" class="btn btn-outline-light fw-semibold shadow-sm me-2">
       <i class="fas fa-map-marker-alt me-1"></i> Kontak & Lokasi
     </a>
     <a href="#" class="btn btn-outline-light fw-semibold shadow-sm">
