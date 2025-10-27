@@ -5,11 +5,27 @@
   <div class="sidebar-header text-center mb-4 sticky-top" style="background: inherit;">
     <div class="logo-icon bg-white rounded-circle d-inline-flex align-items-center justify-content-center shadow-sm mb-3"
          style="width: 60px; height: 60px;">
-      <i class="fas fa-water text-primary fs-4"></i>
+      {{-- ✅ Dynamic Favicon --}}
+      @php
+          $favicon = \App\Models\CompanyProfile::first()->favicon ?? null;
+      @endphp
+
+      @if ($favicon && file_exists(public_path('storage/' . $favicon)))
+          <img src="{{ asset('storage/' . $favicon) }}?v={{ time() }}" 
+               alt="Favicon" 
+               class="rounded-circle shadow-sm" 
+               style="width: 50px; height: 50px; object-fit: cover;">
+      @else
+          <img src="{{ asset('default-favicon.png') }}" 
+               alt="Default Logo" 
+               class="rounded-circle shadow-sm" 
+               style="width: 50px; height: 50px; object-fit: cover;">
+      @endif
     </div>
     <h5 class="text-white fw-semibold mb-1">Waterpark CMS</h5>
     <p class="text-white-50 small mb-0">Admin Panel</p>
   </div>
+
 
   <hr class="border-white-25 mb-4">
 

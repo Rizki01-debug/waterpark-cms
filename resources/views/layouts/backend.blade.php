@@ -4,7 +4,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>@yield('title', 'Dashboard') - Waterpark CMS</title>
-  
+
+  {{-- ✅ Dynamic Favicon --}}
+  @php
+      $favicon = \App\Models\CompanyProfile::first()->favicon ?? null;
+  @endphp
+
+  @if ($favicon)
+      <link rel="icon" type="image/png" href="{{ asset('storage/' . $favicon) }}?v={{ time() }}">
+  @else
+      <link rel="icon" type="image/png" href="{{ asset('default-favicon.png') }}">
+  @endif
+
   <!-- Material Icons -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
   <!-- Font Awesome -->
@@ -15,8 +26,8 @@
   <!-- Custom Sidebar CSS -->
   <link rel="stylesheet" href="{{ asset('adminlte/css/sidebar.css') }}">
   <link rel="stylesheet" href="{{ asset('adminlte/css/backend.css') }}">
-  
 </head>
+
 <body>
   <div class="d-flex">
     <!-- Sidebar -->
