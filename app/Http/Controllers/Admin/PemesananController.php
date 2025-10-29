@@ -15,14 +15,19 @@ class PemesananController extends Controller
     public function index(Request $request)
     {
         $search = $request->query('search');
+        $filterJenis = $request->query('jenis'); // filter tiket / penginapan
 
         $pemesanans = Pemesanan::when($search, function ($query, $search) {
-                $query->where('nama_pemesan', 'like', "%{$search}%");
+                $query->where('nama_pemesan', 'like', "%{$search}%")
+                      ->orWhere('email', 'like', "%{$search}%");
+            })
+            ->when($filterJenis, function ($query, $filterJenis) {
+                $query->where('jenis', $filterJenis);
             })
             ->orderByDesc('id')
             ->paginate(10);
 
-        return view('backend.reservasi.pemesanan.index', compact('pemesanans', 'search'));
+        return view('backend.reservasi.pemesanan.index', compact('pemesanans', 'search', 'filterJenis'));
     }
 
     /**
@@ -30,12 +35,35 @@ class PemesananController extends Controller
      */
     public function show($id)
     {
-        $pemesanan = Pemesanan::with('tiket')->findOrFail($id);
+        $pemesanan = Pemesanan::findOrFail($id);
         return response()->json($pemesanan);
     }
 
     /**
-     * 🔹 Update status pemesanan (Setujui / Tolak)
+     * 🔹 Menambahkan pemesanan baru (opsional jika admin input manual)
+     */
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'nama_pemesan' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'bukti_pembayaran' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
+            'total' => 'required|numeric|min:0',
+            'jenis' => 'required|in:tiket,penginapan',
+            'status' => 'required|in:Konfirmasi,Batal,Berhasil',
+        ]);
+
+        if ($request->hasFile('bukti_pembayaran')) {
+            $validated['bukti_pembayaran'] = $request->file('bukti_pembayaran')->store('bukti_pembayaran', 'public');
+        }
+
+        Pemesanan::create($validated);
+
+        return redirect()->back()->with('success', '✅ Pemesanan baru berhasil ditambahkan!');
+    }
+
+    /**
+     * 🔹 Update status pemesanan (Konfirmasi / Batal / Berhasil)
      */
     public function updateStatus(Request $request, $id)
     {

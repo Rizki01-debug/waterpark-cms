@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\BlogEventController;
 use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\UserAdminController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\LaporanController;
 
 // Setting Profile Controllers
 use App\Http\Controllers\Admin\SettingProfile\IdentitasDasarController;
@@ -122,6 +123,16 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
         Route::resource('sosial-media', SosialMediaController::class)->names('sosial');
 
     });
+
+    /*
+    |--------------------------------------------
+    | Management Laporan
+    |--------------------------------------------
+    */
+Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan.index');
+Route::get('/laporan/export/excel', [LaporanController::class, 'exportExcel'])->name('laporan.export.excel');
+Route::get('/laporan/export/pdf', [LaporanController::class, 'exportPDF'])->name('laporan.export.pdf');
+
 });
 
 /*

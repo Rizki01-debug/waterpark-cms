@@ -11,22 +11,58 @@ class Pemesanan extends Model
 
     protected $table = 'pemesanans'; // nama tabel
 
-    // Kolom yang bisa diisi secara mass assignment
     protected $fillable = [
+        'tiket_id',            // relasi ke tabel tiket (jika ada)
         'nama_pemesan',
         'email',
         'telepon',
         'bukti_pembayaran',
         'status',
+        'total',               // total harga
+        'jenis',               // tiket / penginapan
     ];
 
-    // Default status jika tidak diisi
     protected $attributes = [
         'status' => 'Konfirmasi',
     ];
 
+    /**
+     * 🔗 Relasi ke tabel tiket
+     * Satu pemesanan hanya punya satu tiket
+     */
     public function tiket()
     {
-        return $this->belongsTo(Tiket::class);
+        return $this->belongsTo(Tiket::class, 'tiket_id');
+    }
+
+    /**
+     * 🔹 Scope untuk memfilter berdasarkan jenis
+     * contoh: Pemesanan::tiket()->get()
+     */
+    public function scopeTiket($query)
+    {
+        return $query->where('jenis', 'tiket');
+    }
+
+    public function scopePenginapan($query)
+    {
+        return $query->where('jenis', 'penginapan');
+    }
+
+    /**
+     * 🔹 Scope untuk filter tanggal (range)
+     * contoh: Pemesanan::tanggal('2025-10-01', '2025-10-31')->get()
+     */
+    public function scopeTanggal($query, $start, $end)
+    {
+        return $query->whereBetween('created_at', [$start, $end]);
+    }
+
+    /**
+     * 🔹 Getter untuk format total harga dengan "Rp"
+     */
+    public function getTotalFormattedAttribute()
+    {
+        return 'Rp ' . number_format($this->total, 0, ',', '.');
     }
 }
