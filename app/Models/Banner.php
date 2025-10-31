@@ -10,5 +10,10 @@ class Banner extends Model
     use HasFactory;
 
     protected $fillable = ['judul', 'deskripsi', 'gambar', 'status'];
+
+      public function scopeAktif($query)
+    {
+        return $query->where('status', 'Aktif');
+    }
 }
 
