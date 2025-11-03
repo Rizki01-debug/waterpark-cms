@@ -1,52 +1,85 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3">
-    <div class="container">
-        <a class="navbar-brand fw-bold" href="#">BrandLogo</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+<header id="header" class="header d-flex align-items-center fixed-top">
+  <div class="header-container container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
 
-        <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
-            <ul class="navbar-nav gap-3">
-                <li class="nav-item"><a href="#" class="nav-link">Home</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">Fasilitas</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">Penginapan</a></li>
+    {{-- LOGO --}}
+    <a href="{{ route('dashboard') }}" class="logo d-flex align-items-center me-auto me-xl-0">
+      {{-- Jika ingin logo gambar, aktifkan baris di bawah ini --}}
+      {{-- <img src="{{ asset('assets/img/logo.webp') }}" alt="Logo"> --}}
+      <h1 class="sitename">Waterpark</h1>
+    </a>
 
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="reservasiDropdown" role="button" data-bs-toggle="dropdown">
-                        Reservasi
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Tiket Reguler</a></li>
-                        <li><a class="dropdown-item" href="#">Tiket Paket</a></li>
-                        <li><a class="dropdown-item" href="#">Penginapan</a></li>
-                    </ul>
-                </li>
+    {{-- NAVIGATION MENU --}}
+    <nav id="navmenu" class="navmenu">
+      <ul>
+        <li><a href="">Beranda</a></li>
+        <li><a href="">Fasilitas</a></li>
+        <li><a href="">Galeri</a></li>
 
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="blogDropdown" role="button" data-bs-toggle="dropdown">
-                        Blog
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Berita</a></li>
-                        <li><a class="dropdown-item" href="#">Event</a></li>
-                    </ul>
-                </li>
-            </ul>
+        {{-- Dropdown Reservasi --}}
+        <li class="dropdown">
+          <a href="#">
+            <span>Reservasi</span> 
+            <i class="bi bi-chevron-down toggle-dropdown"></i>
+          </a>
+          <ul>
+            <li><a href="">Tiket Reguler</a></li>
+            <li><a href="">Tiket Paket</a></li>
+            <li><a href="">Penginapan</a></li>
+          </ul>
+        </li>
+
+        {{-- Dropdown Blog --}}
+        <li class="dropdown">
+          <a href="#">
+            <span>Blog</span>
+            <i class="bi bi-chevron-down toggle-dropdown"></i>
+          </a>
+          <ul>
+            <li><a href="">Berita</a></li>
+            <li><a href="">Event</a></li>
+          </ul>
+        </li>
+
+        {{-- Dropdown Halaman Lain --}}
+      </ul>
+      <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+    </nav>
+
+    {{-- CTA & USER MENU --}}
+    <div class="d-flex align-items-center gap-3">
+      <a class="btn-getstarted d-none d-md-inline-block" href="">
+        <i class="bi bi-ticket-perforated me-1"></i> Pesan Tiket
+      </a>
+
+      @auth
+        {{-- USER LOGGED IN DROPDOWN --}}
+        <div class="dropdown">
+          <button class="btn btn-outline-light rounded-circle p-2 d-flex align-items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="bi bi-person-circle fs-5"></i>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark shadow-sm">
+            <li>
+              <a href="" class="dropdown-item">
+                <i class="bi bi-person me-2"></i> Profil Saya
+              </a>
+            </li>
+            <li><hr class="dropdown-divider"></li>
+            <li>
+              <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button type="submit" class="dropdown-item text-danger">
+                  <i class="bi bi-box-arrow-right me-2"></i> Logout
+                </button>
+              </form>
+            </li>
+          </ul>
         </div>
-
-        <div class="d-flex align-items-center">
-            <div class="rounded-circle bg-light text-dark fw-semibold px-3 py-1">
-                User
-            </div>
-
-                <li class="nav-item mb-1">
-  <form method="POST" action="{{ route('logout') }}">
-    @csrf
-    <button type="submit" class="dropdown-item text-danger">
-      <i class="fas fa-sign-out-alt me-2"></i> Logout
-    </button>
-  </form>
-</li>
-        </div>
+      @else
+        {{-- IF NOT LOGGED IN --}}
+        <a href="{{ route('login') }}" class="btn btn-outline-light d-flex align-items-center">
+          <i class="bi bi-box-arrow-in-right me-1"></i> Masuk
+        </a>
+      @endauth
     </div>
-</nav>
+  </div>
+</header>

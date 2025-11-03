@@ -8,10 +8,10 @@ use App\Models\Banner;
 class UserDashboardController extends Controller
 {
     public function index()
-    {
-        // Ambil banner yang status-nya "Aktif"
-$banner = Banner::where('status', true)->latest()->first();
+{
+    $banner = Banner::where('status', true)->latest()->first();
 
-        return view('frontend.dashboard', compact('banner'));
-    }
+    return view('frontend.dashboard', compact('banner'));
+}
+
 }

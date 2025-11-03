@@ -10,7 +10,8 @@
     {{-- Banner dari database --}}
     <img 
         src="{{ asset('storage/' . $banner->gambar) }}"
-        alt="{{ $banner->judul_banner }}" 
+        alt="{{ $banner->judul ?? '' }}"
+
         class="w-100 object-fit-cover" 
         style="height: 100vh; object-position: center;">
 @else
@@ -27,8 +28,8 @@
 
   {{-- Teks Banner --}}
   <div class="container position-absolute top-50 start-50 translate-middle text-center text-white" data-aos="fade-up">
-      <h1 class="fw-bold display-4">
-          {{ $banner->judul_banner ?? '' }}
+      <h1 class="fw-bold display-4 text-white">
+          {{ $banner->judul ?? '' }}
       </h1>
       <p class="lead mb-4">
           {{ $banner->deskripsi ?? 'Nikmati keseruan bermain air dan pengalaman menginap terbaik di Indramayu!' }}
