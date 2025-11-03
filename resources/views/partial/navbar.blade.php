@@ -3,9 +3,24 @@
 
     {{-- LOGO --}}
     <a href="{{ route('dashboard') }}" class="logo d-flex align-items-center me-auto me-xl-0">
-      {{-- Jika ingin logo gambar, aktifkan baris di bawah ini --}}
-      {{-- <img src="{{ asset('assets/img/logo.webp') }}" alt="Logo"> --}}
-      <h1 class="sitename">Waterpark</h1>
+      <div >
+      {{-- ✅ Dynamic Favicon --}}
+      @php
+          $favicon = \App\Models\CompanyProfile::first()->favicon ?? null;
+      @endphp
+
+      @if ($favicon && file_exists(public_path('storage/' . $favicon)))
+          <img src="{{ asset('storage/' . $favicon) }}?v={{ time() }}" 
+               alt="Favicon" 
+               class="rounded-circle shadow-sm" 
+               style="width: 50px; height: 50px; object-fit: cover;">
+      @else
+          <img src="{{ asset('default-favicon.png') }}" 
+               alt="Default Logo" 
+               class="rounded-circle shadow-sm" 
+               style="width: 50px; height: 50px; object-fit: cover;">
+      @endif
+    </div>
     </a>
 
     {{-- NAVIGATION MENU --}}
