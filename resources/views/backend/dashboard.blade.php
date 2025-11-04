@@ -14,7 +14,7 @@
       'label' => 'Total Pengunjung', 
       'icon' => 'fas fa-users', 
       'color' => 'primary',
-      'url' => route('admin.laporan.index')
+      'url' => route('admin.admin.laporan.index')
     ],
     [
       'value' => $reservasiHariIni, 
@@ -28,7 +28,7 @@
       'label' => 'Pendapatan Bulan Ini', 
       'icon' => 'fas fa-chart-line', 
       'color' => 'warning',
-      'url' => route('admin.laporan.index')
+      'url' => route('admin.admin.laporan.index')
     ],
     [
       'value' => $fasilitasAktif, 
