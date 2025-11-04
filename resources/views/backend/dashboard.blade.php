@@ -9,11 +9,35 @@
   <!-- Stat Cards -->
   @php
     $stats = [
-      ['value' => number_format($totalPengunjung), 'label' => 'Total Pengunjung', 'icon' => 'fas fa-users', 'color' => 'primary'],
-      ['value' => $reservasiHariIni, 'label' => 'Reservasi Hari Ini', 'icon' => 'fas fa-calendar-check', 'color' => 'success'],
-      ['value' => $pendapatanBulanIni, 'label' => 'Pendapatan Bulan Ini', 'icon' => 'fas fa-chart-line', 'color' => 'warning'],
-      ['value' => $fasilitasAktif, 'label' => 'Fasilitas Aktif', 'icon' => 'fas fa-umbrella-beach', 'color' => 'info'],
-    ];
+    [
+      'value' => number_format($totalPengunjung), 
+      'label' => 'Total Pengunjung', 
+      'icon' => 'fas fa-users', 
+      'color' => 'primary',
+      'url' => route('admin.laporan.index')
+    ],
+    [
+      'value' => $reservasiHariIni, 
+      'label' => 'Reservasi Hari Ini', 
+      'icon' => 'fas fa-calendar-check', 
+      'color' => 'success',
+      'url' => route('admin.reservasi.reguler.index')
+    ],
+    [
+      'value' => $pendapatanBulanIni, 
+      'label' => 'Pendapatan Bulan Ini', 
+      'icon' => 'fas fa-chart-line', 
+      'color' => 'warning',
+      'url' => route('admin.laporan.index')
+    ],
+    [
+      'value' => $fasilitasAktif, 
+      'label' => 'Fasilitas Aktif', 
+      'icon' => 'fas fa-umbrella-beach', 
+      'color' => 'info',
+      'url' => route('admin.fasilitas.index')
+    ],
+  ];
   @endphp
 
   @foreach ($stats as $stat)

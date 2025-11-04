@@ -34,6 +34,21 @@
           <p><strong>Email:</strong> <span>{{ $companyContact->email ?? '-' }}</span></p>
           <p><strong>Jam Operasional:</strong> <span>{{ $companyContact->jam_operasional ?? '-' }}</span></p>
         </div>
+
+        {{-- ✅ Google Maps Embed --}}
+        @if(!empty($companyContact->google_maps))
+          <div class="mt-3 rounded overflow-hidden shadow-sm">
+            <iframe
+              src="{{ $companyContact->google_maps }}"
+              width="100%"
+              height="200"
+              style="border:0;"
+              allowfullscreen=""
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+          </div>
+        @endif
       </div>
 
       {{-- Navigasi Cepat --}}

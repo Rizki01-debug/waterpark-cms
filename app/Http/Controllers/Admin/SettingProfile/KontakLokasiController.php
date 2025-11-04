@@ -29,6 +29,11 @@ class KontakLokasiController extends Controller
             'jam_operasional' => 'nullable|string|max:100',
         ]);
 
+        // 🧠 Filter otomatis link Google Maps
+        if (!empty($validated['google_maps'])) {
+            $validated['google_maps'] = $this->extractGoogleMapsSrc($validated['google_maps']);
+        }
+
         CompanyContact::updateOrCreate(['id' => 1], $validated);
 
         return redirect()->route('admin.settingprofile.kontak.index')
@@ -57,6 +62,11 @@ class KontakLokasiController extends Controller
             'jam_operasional' => 'nullable|string|max:100',
         ]);
 
+        // 🧠 Filter otomatis link Google Maps
+        if (!empty($validated['google_maps'])) {
+            $validated['google_maps'] = $this->extractGoogleMapsSrc($validated['google_maps']);
+        }
+
         $kontak = CompanyContact::findOrFail($id);
         $kontak->update($validated);
 
@@ -71,5 +81,19 @@ class KontakLokasiController extends Controller
 
         return redirect()->route('admin.settingprofile.kontak.index')
             ->with('success', 'Data berhasil dihapus.');
+    }
+
+    /**
+     * 🧩 Fungsi untuk ambil URL src dari kode embed Google Maps
+     */
+    private function extractGoogleMapsSrc($input)
+    {
+        // Kalau admin paste iframe penuh, ambil hanya bagian src
+        if (preg_match('/src="([^"]+)"/', $input, $matches)) {
+            return $matches[1];
+        }
+
+        // Kalau admin sudah paste link langsung, biarkan
+        return $input;
     }
 }
