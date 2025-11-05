@@ -7,24 +7,85 @@
 
         <title>{{ config('app.name', 'Laravel') }}</title>
 
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+    {{-- ✅ Vendor CSS --}}
+    <link rel="stylesheet" href="{{ asset('simplecity/vendor/bootstrap/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('simplecity/vendor/bootstrap-icons/bootstrap-icons.css') }}">
+    <link rel="stylesheet" href="{{ asset('simplecity/vendor/aos/aos.css') }}">
+    <link rel="stylesheet" href="{{ asset('simplecity/vendor/swiper/swiper-bundle.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('simplecity/vendor/glightbox/css/glightbox.min.css') }}">
+
+    {{-- ✅ Custom Template CSS --}}
+    <link rel="stylesheet" href="{{ asset('simplecity/css/main.css') }}">
 
         <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-    </head>
-    <body class="font-sans text-gray-900 antialiased">
-        <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
-            <div>
-                <a href="/">
-                    <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-                </a>
-            </div>
+    <script src="{{ asset('simplecity/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('simplecity/vendor/aos/aos.js') }}"></script>
+    <script src="{{ asset('simplecity/vendor/purecounter/purecounter_vanilla.js') }}"></script>
+    <script src="{{ asset('simplecity/vendor/swiper/swiper-bundle.min.js') }}"></script>
+    <script src="{{ asset('simplecity/vendor/isotope-layout/isotope.pkgd.min.js') }}"></script>
+    <script src="{{ asset('simplecity/vendor/imagesloaded/imagesloaded.pkgd.min.js') }}"></script>
+    <script src="{{ asset('simplecity/vendor/glightbox/js/glightbox.min.js') }}"></script>
 
-            <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
-                {{ $slot }}
+    {{-- ✅ Main JS --}}
+    <script src="{{ asset('simplecity/js/main.js') }}"></script>
+        
+        <style>
+            body {
+                font-family: 'Figtree', sans-serif;
+                background-color: #f8f9fa;
+            }
+            .auth-container {
+                min-height: 100vh;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+            }
+            .auth-card {
+                border: none;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                border-radius: 0.5rem;
+            }
+        </style>
+    </head>
+    <body class="text-gray-900">
+        <div class="auth-container py-5">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-6 col-lg-4 text-center mb-4">
+<div class="logo-icon bg-white rounded-circle d-inline-flex align-items-center justify-content-center shadow-sm mb-3"
+         style="width: 60px; height: 60px;">
+      {{-- ✅ Dynamic Favicon --}}
+      @php
+          $favicon = \App\Models\CompanyProfile::first()->favicon ?? null;
+      @endphp
+
+      @if ($favicon && file_exists(public_path('storage/' . $favicon)))
+          <img src="{{ asset('storage/' . $favicon) }}?v={{ time() }}" 
+               alt="Favicon" 
+               class="rounded-circle shadow-sm" 
+               style="width: 200px; height: 200px; object-fit: cover;">
+      @else
+          <img src="{{ asset('default-favicon.png') }}" 
+               alt="Default Logo" 
+               class="rounded-circle shadow-sm" 
+               style="width: 220px; height: 220px; object-fit: cover;">
+      @endif
+    </div>
+                    </div>
+                </div>         
+                <div class="row justify-content-center">
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card auth-card">
+                            <div class="card-body p-4">
+                                {{ $slot }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
+
+        <!-- Bootstrap JS Bundle with Popper -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     </body>
 </html>
