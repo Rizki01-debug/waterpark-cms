@@ -8476,3 +8476,20 @@ section,
 --------------------------------------------------------------*/
 /* .starter-section {
   /* Add your styles here */
+
+.card {
+  transition: all 0.3s ease-in-out;
+}
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+}
+.pagination .page-link {
+  border-radius: 50%;
+  color: #000;
+}
+.pagination .page-item.active .page-link {
+  background-color: #dc3545;
+  border-color: #dc3545;
+  color: white;
+}

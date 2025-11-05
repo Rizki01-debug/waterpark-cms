@@ -26,8 +26,8 @@
     {{-- NAVIGATION MENU --}}
     <nav id="navmenu" class="navmenu">
       <ul>
-        <li><a href="">Beranda</a></li>
-        <li><a href="">Fasilitas</a></li>
+        <li><a href="{{ route('dashboard') }}">Beranda</a></li>
+        <li><a href="{{ route('fasilitas.index') }}">Fasilitas</a></li>
         <li><a href="">Galeri</a></li>
 
         {{-- Dropdown Reservasi --}}
