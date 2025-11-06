@@ -9,7 +9,7 @@
   <div class="d-flex flex-wrap justify-content-between align-items-end mb-4">
 
     {{-- FORM FILTER --}}
-    <form action="{{ route('admin.admin.laporan.index') }}" method="GET" class="row g-3 align-items-end flex-grow-1 me-3">
+    <form action="{{ route('admin.laporan.index') }}" method="GET" class="row g-3 align-items-end flex-grow-1 me-3">
 
       {{-- Kategori --}}
       <div class="col-md-3">
@@ -64,7 +64,7 @@
       <ul class="dropdown-menu dropdown-menu-dark">
         <li>
           <a class="dropdown-item"
-             href="{{ route('admin.admin.laporan.export.pdf', [
+             href="{{ route('admin.laporan.export.pdf', [
                 'kategori' => request('kategori'),
                 'start_date' => request('start_date'),
                 'end_date' => request('end_date'),
@@ -75,7 +75,7 @@
         </li>
         <li>
           <a class="dropdown-item"
-             href="{{ route('admin.admin.laporan.export.excel', [
+             href="{{ route('admin.laporan.export.excel', [
                 'kategori' => request('kategori'),
                 'start_date' => request('start_date'),
                 'end_date' => request('end_date'),

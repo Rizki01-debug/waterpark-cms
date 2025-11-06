@@ -28,7 +28,7 @@
       <ul>
         <li><a href="{{ route('dashboard') }}">Beranda</a></li>
         <li><a href="{{ route('fasilitas.index') }}">Fasilitas</a></li>
-        <li><a href="">Galeri</a></li>
+        <li><a href="{{ route('galeri.index') }}">Galeri</a></li>
 
         {{-- Dropdown Reservasi --}}
         <li class="dropdown">

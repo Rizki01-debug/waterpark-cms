@@ -52,6 +52,12 @@
       </a>
     </li>
 
+<a href="{{ route('admin.gallery.index') }}" 
+   class="nav-link d-flex align-items-center text-white py-2 px-3 rounded-3 sidebar-link">
+    <i class="fas fa-images me-3 fs-5"></i>
+    <span>Galeri</span>
+</a>
+
     <!-- Reservasi Dropdown -->
     <li class="nav-item mb-1">
       <a class="nav-link d-flex justify-content-between align-items-center text-white py-2 px-3 rounded-3 sidebar-link collapsed"
@@ -115,7 +121,7 @@
     </li>
 
     <li class="nav-item mb-1">
-      <a href="{{ route('admin.admin.laporan.index') }}" class="nav-link d-flex align-items-center text-white py-2 px-3 rounded-3 sidebar-link">
+      <a href="{{ route('admin.laporan.index') }}" class="nav-link d-flex align-items-center text-white py-2 px-3 rounded-3 sidebar-link">
         <i class="fas fa-chart-bar me-3 fs-5"></i> <span>Laporan</span>
       </a>
     </li>

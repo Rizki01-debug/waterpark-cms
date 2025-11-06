@@ -27,10 +27,10 @@
     {{-- Teks Banner --}}
     <div class="container position-absolute top-50 start-50 translate-middle text-center text-white" data-aos="fade-up">
         <h1 class="fw-bold display-4 text-white">
-            {{ $banner->judul ?? 'Selamat Datang di Embun Pelangi Waterpark' }}
+            {{ $banner->judul ?? 'Selamat Datang di Waterboom Kami' }}
         </h1>
         <p class="lead mb-4">
-            {{ $banner->deskripsi ?? 'Nikmati keseruan bermain air dan pengalaman menginap terbaik di Indramayu!' }}
+            {{ $banner->deskripsi ?? 'Nikmati keseruan bermain air dan pengalaman menginap yang pernah ada' }}
         </p>
         <a href="#reservasi" class="btn btn-danger btn-lg me-3">Pesan Tiket</a>
         <a href="#fasilitas" class="btn btn-outline-light btn-lg">Lihat Fasilitas</a>

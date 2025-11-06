@@ -8493,3 +8493,9 @@ section,
   border-color: #dc3545;
   color: white;
 }
+
+/* Atur jarak aman dari navbar fixed-top */
+.main {
+  margin-top: 120px;
+}
+
