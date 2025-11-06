@@ -5,12 +5,20 @@
     <div class="container text-center">
       <h4>Bergabung Bersama Kami</h4>
       <p>Dapatkan info terbaru dan promo menarik dari {{ $companyProfile->nama ?? 'Embun Pelangi Waterpark' }}</p>
-      <form action="#" method="post" class="php-email-form d-flex justify-content-center mt-3">
-        <div class="newsletter-form">
-          <input type="email" name="email" placeholder="Masukkan email kamu" required>
-          <input type="submit" value="Berlangganan">
-        </div>
-      </form>
+
+      {{-- Newsletter Form --}}
+      @if(session('success'))
+  <div class="alert alert-success text-center mt-2">{{ session('success') }}</div>
+@endif
+
+<form action="{{ route('newsletter.store') }}" method="POST" class="php-email-form d-flex justify-content-center mt-3">
+  @csrf
+  <div class="newsletter-form d-flex gap-2">
+    <input type="email" name="email" placeholder="Masukkan email kamu" required class="form-control" style="max-width: 300px;">
+    <input type="submit" value="Berlangganan" class="btn btn-warning text-white px-4">
+  </div>
+</form>
+
     </div>
   </div>
 
@@ -56,8 +64,8 @@
         <h4>Menu</h4>
         <ul class="list-unstyled">
           <li><i class="bi bi-chevron-right"></i> <a href="{{ url('/') }}">Beranda</a></li>
-          <li><i class="bi bi-chevron-right"></i> <a href="#tentang">Tentang Kami</a></li>
-          <li><i class="bi bi-chevron-right"></i> <a href="#fasilitas">Fasilitas</a></li>
+          <li><i class="bi bi-chevron-right"></i> <a href="{{ route('fasilitas.index') }}">Fasilitas</a></li>
+          <li><i class="bi bi-chevron-right"></i> <a href="{{ route('galeri.index') }}">Galeri</a></li>
           <li><i class="bi bi-chevron-right"></i> <a href="#reservasi">Reservasi</a></li>
           <li><i class="bi bi-chevron-right"></i> <a href="#kontak">Kontak</a></li>
         </ul>

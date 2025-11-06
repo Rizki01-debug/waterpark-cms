@@ -18,6 +18,7 @@ use App\Http\Controllers\Admin\UserAdminController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\LaporanController;
 use App\Http\Controllers\Admin\GalleryController;
+use App\Http\Controllers\Admin\NewsletterController as AdminNewsletterController;
 
 // Setting Profile Controllers
 use App\Http\Controllers\Admin\SettingProfile\IdentitasDasarController;
@@ -33,6 +34,7 @@ use App\Http\Controllers\Admin\PemesananController;
 use App\Http\Controllers\User\UserDashboardController;
 use App\Http\Controllers\User\FasilitasController as UserFasilitasController;
 use App\Http\Controllers\User\GalleryController as UserGalleryController;
+use App\Http\Controllers\NewsletterController;
 
 
 /*
@@ -55,6 +57,7 @@ Route::middleware(['auth', 'user'])->group(function () {
 Route::get('/fasilitas', [UserFasilitasController::class, 'index'])->name('fasilitas.index');
 Route::get('/fasilitas/{id}', [UserFasilitasController::class, 'show'])->name('fasilitas.show');
 Route::get('/galeri', [UserGalleryController::class, 'index'])->name('galeri.index');
+Route::post('/newsletter/subscribe', [NewsletterController::class, 'store'])->name('newsletter.store');
 
 
 
@@ -145,6 +148,14 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan.index');
     Route::get('/laporan/export/excel', [LaporanController::class, 'exportExcel'])->name('laporan.export.excel');
     Route::get('/laporan/export/pdf', [LaporanController::class, 'exportPDF'])->name('laporan.export.pdf');
+
+    // --------------------------------
+    // Management Newsletter
+    // --------------------------------
+    Route::get('/newsletter', [AdminNewsletterController::class, 'index'])->name('newsletter.index');
+    Route::delete('/newsletter/{id}', [AdminNewsletterController::class, 'destroy'])->name('newsletter.destroy');
+
+
 });
 
 

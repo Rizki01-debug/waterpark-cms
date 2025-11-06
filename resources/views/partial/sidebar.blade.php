@@ -34,7 +34,8 @@
     <!-- Dashboard -->
     <li class="nav-item mb-2">
       <a href="{{ route('admin.dashboard') }}"
-         class="nav-link d-flex align-items-center text-white py-2 px-3 rounded-3 sidebar-link">
+         class="nav-link d-flex align-items-center text-white py-2 px-3 rounded-3 sidebar-link
+         {{ request()->routeIs('admin.dashboard') ? 'bg-warning text-dark' : 'text-white' }}"">
         <i class="fas fa-tachometer-alt me-3 fs-5"></i>
         <span>Dashboard</span>
       </a>
@@ -46,17 +47,21 @@
     </li>
 
     <li class="nav-item mb-1">
-      <a href="{{ route('admin.fasilitas.index') }}" class="nav-link d-flex align-items-center text-white py-2 px-3 rounded-3 sidebar-link">
+      <a href="{{ route('admin.fasilitas.index') }}" class="nav-link d-flex align-items-center text-white py-2 px-3 rounded-3 sidebar-link
+      {{ request()->routeIs('admin.fasilitas.*') ? 'bg-warning text-dark' : 'text-white' }}"">
         <i class="fas fa-umbrella-beach me-3 fs-5"></i>
         <span>Fasilitas</span>
       </a>
     </li>
 
+    <li>
 <a href="{{ route('admin.gallery.index') }}" 
-   class="nav-link d-flex align-items-center text-white py-2 px-3 rounded-3 sidebar-link">
+   class="nav-link d-flex align-items-center text-white py-2 px-3 rounded-3 sidebar-link
+   {{ request()->routeIs('admin.gallery.*') ? 'bg-warning text-dark' : 'text-white' }}"">
     <i class="fas fa-images me-3 fs-5"></i>
     <span>Galeri</span>
 </a>
+</li>
 
     <!-- Reservasi Dropdown -->
     <li class="nav-item mb-1">
@@ -91,7 +96,8 @@
     </li>
 
       <li class="nav-item mb-1">
-      <a href="{{ route('admin.banner.index') }}" class="nav-link d-flex align-items-center text-white py-2 px-3 rounded-3 sidebar-link">
+      <a href="{{ route('admin.banner.index') }}" class="nav-link d-flex align-items-center text-white py-2 px-3 rounded-3 sidebar-link
+      {{ request()->routeIs('admin.banner.*') ? 'bg-warning text-dark' : 'text-white' }}"">
         <i class="fas fa-bullhorn me-3 fs-5"></i>
         <span>Promo Banner</span>
       </a>
@@ -103,27 +109,38 @@
     </li>
 
     <li class="nav-item mb-1">
-      <a href="{{ route('admin.system.admins.index') }}" class="nav-link d-flex align-items-center text-white py-2 px-3 rounded-3 sidebar-link">
+      <a href="{{ route('admin.system.admins.index') }}" class="nav-link d-flex align-items-center text-white py-2 px-3 rounded-3 sidebar-link
+      {{ request()->routeIs('admin.system.admins.*') ? 'bg-warning text-dark' : 'text-white' }}"">
         <i class="fas fa-user-plus me-3 fs-5"></i> <span>Tambah Admin</span>
       </a>
     </li>
 
     <li class="nav-item mb-1">
-      <a href="{{ route('admin.users.index') }}" class="nav-link d-flex align-items-center text-white py-2 px-3 rounded-3 sidebar-link">
+      <a href="{{ route('admin.users.index') }}" class="nav-link d-flex align-items-center text-white py-2 px-3 rounded-3 sidebar-link
+      {{ request()->routeIs('admin.users.*') ? 'bg-warning text-dark' : 'text-white' }}"">
         <i class="fas fa-users me-3 fs-5"></i> <span>Akun User</span>
       </a>
     </li>
 
     <li class="nav-item mb-1">
-      <a href="{{ route('admin.settingprofile.identitas.index') }}" class="nav-link d-flex align-items-center text-white py-2 px-3 rounded-3 sidebar-link">
+      <a href="{{ route('admin.settingprofile.identitas.index') }}" class="nav-link d-flex align-items-center text-white py-2 px-3 rounded-3 sidebar-link
+      {{ request()->routeIs('admin.settingprofile.identitas.*') ? 'bg-warning text-dark' : 'text-white' }}"">
         <i class="fas fa-cog me-3 fs-5"></i> <span>Setting Profil</span>
       </a>
     </li>
 
     <li class="nav-item mb-1">
-      <a href="{{ route('admin.laporan.index') }}" class="nav-link d-flex align-items-center text-white py-2 px-3 rounded-3 sidebar-link">
+      <a href="{{ route('admin.laporan.index') }}" class="nav-link d-flex align-items-center text-white py-2 px-3 rounded-3 sidebar-link
+      {{ request()->routeIs('admin.laporan.*') ? 'bg-warning text-dark' : 'text-white' }}">
         <i class="fas fa-chart-bar me-3 fs-5"></i> <span>Laporan</span>
       </a>
+    </li>
+
+    <li class="nav-item mb-1">
+<a href="{{ route('admin.newsletter.index') }}" 
+   class="nav-link d-flex align-items-center py-2 px-3 rounded-3 sidebar-link {{ request()->routeIs('admin.newsletter.*') ? 'bg-warning text-dark' : 'text-white' }}">
+  <i class="fas fa-envelope-open-text me-3 fs-5"></i> <span>Newsletter</span>
+</a>
     </li>
 
     <br>
