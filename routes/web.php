@@ -36,6 +36,8 @@ use App\Http\Controllers\User\FasilitasController as UserFasilitasController;
 use App\Http\Controllers\User\GalleryController as UserGalleryController;
 use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\User\ReservasiRegulerController as UserReservasiRegulerController;
+use App\Http\Controllers\User\ReservasiPaketController as UserReservasiPaketController;
+
 
 
 /*
@@ -60,6 +62,7 @@ Route::get('/fasilitas/{id}', [UserFasilitasController::class, 'show'])->name('f
 Route::get('/galeri', [UserGalleryController::class, 'index'])->name('galeri.index');
 Route::post('/newsletter/subscribe', [NewsletterController::class, 'store'])->name('newsletter.store');
 Route::get('/reservasi/reguler', [UserReservasiRegulerController::class, 'index'])->name('reservasi.reguler.index');
+Route::get('/reservasi/paket', [UserReservasiPaketController::class, 'index'])->name('reservasi.paket.index');
 
 
 

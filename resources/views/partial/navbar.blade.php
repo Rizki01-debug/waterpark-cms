@@ -38,7 +38,7 @@
           </a>
           <ul>
             <li><a href="{{ route('reservasi.reguler.index') }}">Tiket Reguler</a></li>
-            <li><a href="">Tiket Paket</a></li>
+            <li><a href="{{ route('reservasi.paket.index') }}">Tiket Paket</a></li>
             <li><a href="">Penginapan</a></li>
           </ul>
         </li>
