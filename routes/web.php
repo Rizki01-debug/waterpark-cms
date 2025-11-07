@@ -37,6 +37,7 @@ use App\Http\Controllers\User\GalleryController as UserGalleryController;
 use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\User\ReservasiRegulerController as UserReservasiRegulerController;
 use App\Http\Controllers\User\ReservasiPaketController as UserReservasiPaketController;
+use App\Http\Controllers\User\ReservasiPenginapanController as UserReservasiPenginapanController;
 
 
 
@@ -83,6 +84,12 @@ Route::get('/reservasi/reguler/{id}', [UserReservasiRegulerController::class, 's
 
 Route::get('/reservasi/paket', [UserReservasiPaketController::class, 'index'])->name('reservasi.paket.index');
 Route::get('/reservasi/paket/{id}', [UserReservasiPaketController::class, 'show'])->name('reservasi.paket.show');
+
+Route::get('/reservasi/penginapan', [UserReservasiPenginapanController::class, 'index'])
+    ->name('reservasi.penginapan.index');
+
+Route::get('/reservasi/penginapan/{id}', [UserReservasiPenginapanController::class, 'show'])
+    ->name('reservasi.penginapan.show');
 
 
 
