@@ -51,7 +51,7 @@
           </a>
           <ul>
             <li><a href="{{ route('blog.news.index') }}">Berita</a></li>
-            <li><a href="">Event</a></li>
+            <li><a href="{{ route('blog.events.index') }}">Event</a></li>
           </ul>
         </li>
 

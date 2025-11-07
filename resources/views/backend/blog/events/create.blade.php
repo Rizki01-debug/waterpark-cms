@@ -38,10 +38,11 @@
       </div>
 
       {{-- Deskripsi --}}
-      <div class="mb-3">
-        <label class="form-label text-white fw-semibold">Deskripsi</label>
-        <textarea name="deskripsi" class="form-control bg-dark text-white border-secondary" rows="4" placeholder="Masukkan deskripsi event">{{ old('deskripsi') }}</textarea>
-      </div>
+<div class="mb-3">
+    <label for="deskripsi" class="form-label text-white fw-semibold">Deskripsi</label>
+    <textarea name="deskripsi" id="deskripsi" class="form-control bg-dark text-white border-secondary" rows="4" placeholder="Tuliskan deskripsi event...">{{ old('deskripsi', $event->deskripsi ?? '') }}</textarea>
+</div>
+
 
       {{-- Lokasi & Tanggal --}}
       <div class="row g-3">

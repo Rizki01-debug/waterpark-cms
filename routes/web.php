@@ -39,6 +39,7 @@ use App\Http\Controllers\User\ReservasiRegulerController as UserReservasiReguler
 use App\Http\Controllers\User\ReservasiPaketController as UserReservasiPaketController;
 use App\Http\Controllers\User\ReservasiPenginapanController as UserReservasiPenginapanController;
 use App\Http\Controllers\User\BlogNewsController as UserBlogNewsController;
+use App\Http\Controllers\User\BlogEventController as UserBlogEventController;
 
 
 
@@ -98,7 +99,8 @@ Route::middleware(['auth', 'user'])->group(function () {
     Route::get('/blog/news', [UserBlogNewsController::class, 'index'])->name('blog.news.index');
     Route::get('/blog/news/{id}', [UserBlogNewsController::class, 'show'])->name('blog.news.show');
 
-
+    Route::get('/blog/events', [UserBlogEventController::class, 'index'])->name('blog.events.index');
+    Route::get('/blog/events/{id}', [UserBlogEventController::class, 'show'])->name('blog.events.show');
 
 
 /*

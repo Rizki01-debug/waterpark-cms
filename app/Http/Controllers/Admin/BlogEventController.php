@@ -28,6 +28,7 @@ class BlogEventController extends Controller
     {
         $validated = $request->validate([
             'judul' => 'required|string|max:255',
+            'deskripsi' => 'nullable|string',
             'gambar' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
             'lokasi' => 'nullable|string|max:255',
             'tanggal' => 'nullable|date',
@@ -53,6 +54,7 @@ class BlogEventController extends Controller
     {
         $validated = $request->validate([
             'judul' => 'required|string|max:255',
+            'deskripsi' => 'nullable|string',
             'gambar' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
             'lokasi' => 'nullable|string|max:255',
             'tanggal' => 'nullable|date',
