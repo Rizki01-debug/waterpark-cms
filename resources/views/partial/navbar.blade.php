@@ -37,7 +37,7 @@
             <i class="bi bi-chevron-down toggle-dropdown"></i>
           </a>
           <ul>
-            <li><a href="">Tiket Reguler</a></li>
+            <li><a href="{{ route('reservasi.reguler.index') }}">Tiket Reguler</a></li>
             <li><a href="">Tiket Paket</a></li>
             <li><a href="">Penginapan</a></li>
           </ul>
