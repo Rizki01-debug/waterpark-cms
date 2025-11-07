@@ -41,6 +41,7 @@ use App\Http\Controllers\User\ReservasiPenginapanController as UserReservasiPeng
 use App\Http\Controllers\User\BlogNewsController as UserBlogNewsController;
 use App\Http\Controllers\User\BlogEventController as UserBlogEventController;
 use App\Http\Controllers\User\ProfileController as UserProfileController;
+use App\Http\Controllers\User\PemesananController as UserPemesananController;
 
 
 
@@ -61,6 +62,12 @@ Route::middleware(['auth'])->group(function () {
     // 👤 ROUTE UNTUK USER BIASA
     Route::get('/user/profile', [UserProfileController::class, 'index'])->name('user.profile');
     Route::post('/user/profile', [UserProfileController::class, 'update'])->name('user.profile.update');
+});
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/user/pemesanan', [UserPemesananController::class, 'index'])->name('user.pemesanan.index');
+    Route::get('/user/pemesanan/{id}/nota', [UserPemesananController::class, 'downloadNota'])->name('user.pemesanan.nota');
+    Route::delete('/user/pemesanan/{id}', [UserPemesananController::class, 'destroy'])->name('user.pemesanan.destroy');
 });
 
 Route::middleware(['auth', 'user'])->group(function () {

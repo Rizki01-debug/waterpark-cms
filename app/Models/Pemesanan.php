@@ -12,6 +12,7 @@ class Pemesanan extends Model
     protected $table = 'pemesanans'; // nama tabel
 
     protected $fillable = [
+        'user_id',
         'tiket_id',            // relasi ke tabel tiket (jika ada)
         'nama_pemesan',
         'email',
@@ -30,6 +31,11 @@ class Pemesanan extends Model
      * 🔗 Relasi ke tabel tiket
      * Satu pemesanan hanya punya satu tiket
      */
+    public function user()
+{
+    return $this->belongsTo(User::class, 'user_id');
+}
+
     public function tiket()
     {
         return $this->belongsTo(Tiket::class, 'tiket_id');

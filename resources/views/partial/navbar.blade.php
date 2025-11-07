@@ -80,9 +80,9 @@
       </a>
     </li>
     <li>
-      <a href="#" class="dropdown-item">
-        <i class="bi bi-cart3 me-2"></i> Pembelian
-      </a>
+<a href="{{ route('user.pemesanan.index') }}" class="dropdown-item">
+  <i class="bi bi-cart3 me-2"></i> Pembelian
+</a>
     </li>
     <li><hr class="dropdown-divider"></li>
     <li>
