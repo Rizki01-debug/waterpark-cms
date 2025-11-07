@@ -50,7 +50,7 @@
             <i class="bi bi-chevron-down toggle-dropdown"></i>
           </a>
           <ul>
-            <li><a href="">Berita</a></li>
+            <li><a href="{{ route('blog.news.index') }}">Berita</a></li>
             <li><a href="">Event</a></li>
           </ul>
         </li>

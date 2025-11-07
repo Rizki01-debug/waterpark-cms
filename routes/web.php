@@ -38,6 +38,7 @@ use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\User\ReservasiRegulerController as UserReservasiRegulerController;
 use App\Http\Controllers\User\ReservasiPaketController as UserReservasiPaketController;
 use App\Http\Controllers\User\ReservasiPenginapanController as UserReservasiPenginapanController;
+use App\Http\Controllers\User\BlogNewsController as UserBlogNewsController;
 
 
 
@@ -61,35 +62,42 @@ Route::middleware(['auth', 'user'])->group(function () {
     // --------------------------------
     // Fe Fasilitas
     // --------------------------------
-Route::get('/fasilitas', [UserFasilitasController::class, 'index'])->name('fasilitas.index');
-Route::get('/fasilitas/{id}', [UserFasilitasController::class, 'show'])->name('fasilitas.show');
+    Route::get('/fasilitas', [UserFasilitasController::class, 'index'])->name('fasilitas.index');
+    Route::get('/fasilitas/{id}', [UserFasilitasController::class, 'show'])->name('fasilitas.show');
 
     // --------------------------------
     // Fe Galeri
     // --------------------------------
-Route::get('/galeri', [UserGalleryController::class, 'index'])->name('galeri.index');
+    Route::get('/galeri', [UserGalleryController::class, 'index'])->name('galeri.index');
 
     // --------------------------------
     // Fe newsletter
     // --------------------------------
-Route::post('/newsletter/subscribe', [NewsletterController::class, 'store'])->name('newsletter.store');
+    Route::post('/newsletter/subscribe', [NewsletterController::class, 'store'])->name('newsletter.store');
 
 
     // --------------------------------
     // Fe Reservasi
     // --------------------------------
-Route::get('/reservasi/reguler', [UserReservasiRegulerController::class, 'index'])->name('reservasi.reguler.index');
-Route::get('/reservasi/reguler/{id}', [UserReservasiRegulerController::class, 'show'])
+    Route::get('/reservasi/reguler', [UserReservasiRegulerController::class, 'index'])->name('reservasi.reguler.index');
+    Route::get('/reservasi/reguler/{id}', [UserReservasiRegulerController::class, 'show'])
     ->name('reservasi.reguler.show');
 
-Route::get('/reservasi/paket', [UserReservasiPaketController::class, 'index'])->name('reservasi.paket.index');
-Route::get('/reservasi/paket/{id}', [UserReservasiPaketController::class, 'show'])->name('reservasi.paket.show');
+    Route::get('/reservasi/paket', [UserReservasiPaketController::class, 'index'])->name('reservasi.paket.index');
+    Route::get('/reservasi/paket/{id}', [UserReservasiPaketController::class, 'show'])->name('reservasi.paket.show');
 
-Route::get('/reservasi/penginapan', [UserReservasiPenginapanController::class, 'index'])
+    Route::get('/reservasi/penginapan', [UserReservasiPenginapanController::class, 'index'])
     ->name('reservasi.penginapan.index');
 
-Route::get('/reservasi/penginapan/{id}', [UserReservasiPenginapanController::class, 'show'])
+    Route::get('/reservasi/penginapan/{id}', [UserReservasiPenginapanController::class, 'show'])
     ->name('reservasi.penginapan.show');
+
+    // --------------------------------
+    // Fe Blog
+    // --------------------------------
+    Route::get('/blog/news', [UserBlogNewsController::class, 'index'])->name('blog.news.index');
+    Route::get('/blog/news/{id}', [UserBlogNewsController::class, 'show'])->name('blog.news.show');
+
 
 
 
