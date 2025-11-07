@@ -68,27 +68,33 @@
 
       @auth
         {{-- USER LOGGED IN DROPDOWN --}}
-        <div class="dropdown">
-          <button class="btn btn-outline-light rounded-circle p-2 d-flex align-items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <i class="bi bi-person-circle fs-5"></i>
-          </button>
-          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark shadow-sm">
-            <li>
-              <a href="" class="dropdown-item">
-                <i class="bi bi-person me-2"></i> Profil Saya
-              </a>
-            </li>
-            <li><hr class="dropdown-divider"></li>
-            <li>
-              <form method="POST" action="{{ route('logout') }}">
-                @csrf
-                <button type="submit" class="dropdown-item text-danger">
-                  <i class="bi bi-box-arrow-right me-2"></i> Logout
-                </button>
-              </form>
-            </li>
-          </ul>
-        </div>
+<div class="dropdown">
+  <button class="btn btn-outline-light rounded-circle p-2 d-flex align-items-center" 
+          type="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <i class="bi bi-person-circle fs-5"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark shadow-sm">
+    <li>
+      <a href="{{ route('user.profile') }}" class="dropdown-item">
+        <i class="bi bi-person me-2"></i> Profil Saya
+      </a>
+    </li>
+    <li>
+      <a href="#" class="dropdown-item">
+        <i class="bi bi-cart3 me-2"></i> Pembelian
+      </a>
+    </li>
+    <li><hr class="dropdown-divider"></li>
+    <li>
+      <form method="POST" action="{{ route('logout') }}">
+        @csrf
+        <button type="submit" class="dropdown-item text-danger">
+          <i class="bi bi-box-arrow-right me-2"></i> Logout
+        </button>
+      </form>
+    </li>
+  </ul>
+</div>
       @else
         {{-- IF NOT LOGGED IN --}}
         <a href="{{ route('login') }}" class="btn btn-outline-light d-flex align-items-center">

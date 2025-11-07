@@ -40,6 +40,7 @@ use App\Http\Controllers\User\ReservasiPaketController as UserReservasiPaketCont
 use App\Http\Controllers\User\ReservasiPenginapanController as UserReservasiPenginapanController;
 use App\Http\Controllers\User\BlogNewsController as UserBlogNewsController;
 use App\Http\Controllers\User\BlogEventController as UserBlogEventController;
+use App\Http\Controllers\User\ProfileController as UserProfileController;
 
 
 
@@ -56,6 +57,12 @@ Route::get('/', fn() => redirect('/login'));
 | Frontend (User)
 |--------------------------------------------------------------------------
 */
+Route::middleware(['auth'])->group(function () {
+    // 👤 ROUTE UNTUK USER BIASA
+    Route::get('/user/profile', [UserProfileController::class, 'index'])->name('user.profile');
+    Route::post('/user/profile', [UserProfileController::class, 'update'])->name('user.profile.update');
+});
+
 Route::middleware(['auth', 'user'])->group(function () {
     Route::get('/dashboard', [UserDashboardController::class, 'index'])->name('dashboard');
 });
@@ -108,6 +115,11 @@ Route::middleware(['auth', 'user'])->group(function () {
 | Backend (Admin)
 |--------------------------------------------------------------------------
 */
+// 🛠️ ROUTE UNTUK ADMIN
+Route::middleware(['auth', 'can:isAdmin'])->group(function () {
+    Route::get('/admin/users', [UserAdminController::class, 'index'])->name('admin.users.index');
+});
+
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(function () {
 
     // --------------------------------
