@@ -8499,3 +8499,130 @@ section,
   margin-top: 120px;
 }
 
+  /* Card Style */
+  .tiket-card {
+    background-color: #fff; /* putih clean */
+    transition: all 0.3s ease;
+    border: 1px solid #f2f2f2;
+  }
+
+  .tiket-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  }
+
+  .tiket-card img {
+    transition: transform 0.4s ease;
+  }
+
+  .tiket-card:hover img {
+    transform: scale(1.05);
+  }
+
+  /* Tombol */
+  .btn-outline-primary {
+    border-color: #0096c7;
+    color: #0096c7;
+  }
+
+  .btn-outline-primary:hover {
+    background-color: #0096c7;
+    color: #fff;
+  }
+
+  .btn-primary {
+    background-color: #0096c7;
+    border-color: #0096c7;
+  }
+
+  .btn-primary:hover {
+    background-color: #0077b6;
+    border-color: #0077b6;
+  }
+
+  /* Pagination Style */
+  .pagination .page-link {
+    border-radius: 8px;
+    color: #0096c7;
+  }
+
+  .pagination .page-link:hover {
+    background-color: #0096c7;
+    color: white;
+  }
+
+  .pagination .active .page-link {
+    background-color: #0096c7;
+    border-color: #0096c7;
+  }
+
+  /* Card Fasilitas */
+  .fasilitas-card {
+    background-color: #fff;
+    transition: all 0.3s ease;
+    border: 1px solid #f1f1f1;
+  }
+
+  .fasilitas-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  }
+
+  .fasilitas-card img {
+    transition: transform 0.4s ease;
+  }
+
+  .fasilitas-card:hover img {
+    transform: scale(1.05);
+  }
+
+  /* Tombol */
+  .btn-outline-primary {
+    border-color: #0096c7;
+    color: #0096c7;
+  }
+
+  .btn-outline-primary:hover {
+    background-color: #0096c7;
+    color: #fff;
+  }
+
+  .btn-danger {
+    background-color: #d62828;
+    border-color: #d62828;
+  }
+
+  .btn-danger:hover {
+    background-color: #bb2525;
+    border-color: #bb2525;
+  }
+
+  /* card paket */
+  .paket-card {
+    transition: all 0.3s ease;
+  }
+
+  .paket-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  }
+
+  .btn-outline-primary {
+    border-color: #0096c7;
+    color: #0096c7;
+  }
+
+  .btn-outline-primary:hover {
+    background-color: #0096c7;
+    color: #fff;
+  }
+
+  .btn-primary {
+    background-color: #0096c7;
+    border-color: #0096c7;
+  }
+
+  .btn-primary:hover {
+    background-color: #0077b6;
+    border-color: #0077b6;
+  }

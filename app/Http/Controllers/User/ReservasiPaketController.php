@@ -9,9 +9,15 @@ class ReservasiPaketController extends Controller
 {
     public function index()
     {
-        // hanya ambil data yang aktif
-        $paket = ReservasiPaket::where('status', 'aktif')->paginate(6);
+        // Ambil paket aktif (status = 1)
+        $paket = ReservasiPaket::where('status', 1)->paginate(6);
 
         return view('frontend.reservasi.paket.index', compact('paket'));
+    }
+
+    public function show($id)
+    {
+        $paket = ReservasiPaket::findOrFail($id);
+        return view('frontend.reservasi.paket.show', compact('paket'));
     }
 }
