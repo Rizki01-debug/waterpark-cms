@@ -21,19 +21,20 @@ class LaporanController extends Controller
         // Ambil filter dari request
         $start = $request->get('start_date', Carbon::now()->startOfMonth());
         $end = $request->get('end_date', Carbon::now()->endOfMonth());
-        $kategori = $request->get('kategori'); // tiket / penginapan
+        $kategori = $request->get('kategori'); // reguler / paket / penginapan
         $status = $request->get('status');     // Konfirmasi / Berhasil / Batal
 
         // Query dasar
         $query = Pemesanan::whereBetween('created_at', [$start, $end]);
 
-        if ($kategori) $query->where('jenis', $kategori);
+        if ($kategori) $query->where('kategori', $kategori);
         if ($status) $query->where('status', $status);
 
         // Statistik dasar
         $totalProfit = (clone $query)->sum('total');
-        $totalTiket = (clone $query)->where('jenis', 'tiket')->count();
-        $totalPenginapan = (clone $query)->where('jenis', 'penginapan')->count();
+        $totalTiket = (clone $query)->where('kategori', 'reguler')->count();
+        $totalPaket = (clone $query)->where('kategori', 'paket')->count();
+        $totalPenginapan = (clone $query)->where('kategori', 'penginapan')->count();
         $totalPengunjung = (clone $query)->distinct('nama_pemesan')->count('nama_pemesan');
 
         // Grafik profit per hari
@@ -53,7 +54,7 @@ class LaporanController extends Controller
 
         return view('backend.laporan.index', compact(
             'start', 'end', 'kategori', 'status',
-            'totalProfit', 'totalTiket', 'totalPenginapan',
+            'totalProfit', 'totalTiket', 'totalPaket', 'totalPenginapan',
             'totalPengunjung', 'chartData', 'transaksi'
         ));
     }
@@ -84,7 +85,7 @@ class LaporanController extends Controller
 
         // Query laporan
         $query = Pemesanan::whereBetween('created_at', [$start, $end]);
-        if ($kategori) $query->where('jenis', $kategori);
+        if ($kategori) $query->where('kategori', $kategori);
         if ($status) $query->where('status', $status);
 
         $transaksi = $query->orderBy('created_at', 'desc')->get();

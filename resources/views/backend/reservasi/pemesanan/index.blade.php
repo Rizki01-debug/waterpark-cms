@@ -57,37 +57,54 @@
                   <span class="text-muted">Belum ada</span>
                 @endif
               </td>
+
               <td>
                 @if ($pemesanan->status === 'Konfirmasi')
                   <span class="badge bg-warning text-dark">Konfirmasi</span>
                 @elseif ($pemesanan->status === 'Berhasil')
                   <span class="badge bg-success">Berhasil</span>
+                @elseif ($pemesanan->status === 'Pending')
+                  <span class="badge bg-secondary">Pending</span>
                 @else
                   <span class="badge bg-danger">Batal</span>
                 @endif
               </td>
+
               <td class="text-center">
                 <div class="d-flex justify-content-center gap-2">
-                  @if ($pemesanan->status === 'Konfirmasi')
-                    <form method="POST" action="{{ route('admin.pemesanan.updateStatus', [$pemesanan->id, 'status' => 'Berhasil']) }}">
+                  @if ($pemesanan->status === 'Pending' || $pemesanan->status === 'Konfirmasi')
+                    {{-- ✅ Tombol Setujui --}}
+                    <form method="POST" action="{{ route('admin.reservasi.pemesanan.updateStatus', $pemesanan->id) }}">
                       @csrf
                       @method('PUT')
-                      <button type="submit" class="btn btn-success btn-sm">Setujui</button>
+                      <input type="hidden" name="status" value="Berhasil">
+                      <button type="submit" class="btn btn-success btn-sm">
+                        <i class="fas fa-check"></i> Setujui
+                      </button>
                     </form>
-                    <form method="POST" action="{{ route('admin.pemesanan.updateStatus', [$pemesanan->id, 'status' => 'Batal']) }}">
+
+                    {{-- ❌ Tombol Tolak --}}
+                    <form method="POST" action="{{ route('admin.reservasi.pemesanan.updateStatus', $pemesanan->id) }}">
                       @csrf
                       @method('PUT')
-                      <button type="submit" class="btn btn-danger btn-sm">Tolak</button>
+                      <input type="hidden" name="status" value="Batal">
+                      <button type="submit" class="btn btn-danger btn-sm">
+                        <i class="fas fa-times"></i> Tolak
+                      </button>
                     </form>
                   @else
-                    <button class="btn btn-secondary btn-sm" disabled>Selesai</button>
+                    <button class="btn btn-secondary btn-sm" disabled>
+                      <i class="fas fa-lock"></i> Selesai
+                    </button>
                   @endif
                 </div>
               </td>
             </tr>
           @empty
             <tr>
-              <td colspan="5" class="text-center text-muted py-3">Belum ada data pemesanan</td>
+              <td colspan="5" class="text-center text-muted py-3">
+                Belum ada data pemesanan
+              </td>
             </tr>
           @endforelse
         </tbody>

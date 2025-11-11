@@ -42,12 +42,17 @@
               </div>
 
               {{-- Tombol --}}
-              <a href="{{ route('reservasi.penginapan.show', $item->id) }}" class="btn btn-outline-primary btn-sm px-4 rounded-pill">
+              <a href="{{ route('reservasi.penginapan.show', $item->id) }}" 
+                 class="btn btn-outline-primary btn-sm px-4 rounded-pill">
                 <i class="bi bi-eye"></i> Lihat Detail
               </a>
-              <a href="#" class="btn btn-primary btn-sm px-4 rounded-pill ms-2">
-                Pesan
-              </a>
+
+              <button 
+                class="btn btn-danger btn-pay"
+                data-tiket-id="{{ $item->id }}"
+                data-jenis="penginapan">
+                <i class="bi bi-credit-card"></i> Pesan & Bayar
+              </button>
             </div>
           </div>
         </div>
@@ -82,13 +87,65 @@
     background-color: #0096c7;
     color: #fff;
   }
-  .btn-primary {
-    background-color: #0096c7;
-    border-color: #0096c7;
-  }
-  .btn-primary:hover {
-    background-color: #0077b6;
-    border-color: #0077b6;
-  }
 </style>
 @endsection
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const payButtons = document.querySelectorAll('.btn-pay');
+  if (!payButtons.length) return console.error("❌ Tidak ada tombol pembayaran ditemukan!");
+
+  payButtons.forEach(btn => {
+    btn.addEventListener('click', async function() {
+      const tiketId = this.dataset.tiketId;
+      const jenis = this.dataset.jenis;
+      const originalText = this.innerHTML;
+
+      // Loading state
+      this.disabled = true;
+      this.innerHTML = '<i class="bi bi-hourglass-split"></i> Memproses...';
+
+      try {
+        const response = await fetch("{{ route('payment.create') }}", {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+          },
+          body: JSON.stringify({ tiket_id: tiketId, jenis })
+        });
+
+        const text = await response.text();
+        const data = JSON.parse(text);
+
+        if (data.snap_token) {
+          snap.pay(data.snap_token, {
+            onSuccess: result => {
+              alert('✅ Pembayaran berhasil!');
+              location.reload();
+            },
+            onPending: result => {
+              alert('⌛ Pembayaran menunggu konfirmasi.');
+            },
+            onError: result => {
+              alert('❌ Terjadi kesalahan saat pembayaran.');
+            },
+            onClose: () => {
+              alert('Kamu menutup popup pembayaran.');
+            }
+          });
+        } else {
+          alert(data.message || 'Gagal memproses pembayaran.');
+        }
+
+      } catch (err) {
+        console.error(err);
+        alert('Terjadi kesalahan koneksi ke server.');
+      } finally {
+        this.disabled = false;
+        this.innerHTML = originalText;
+      }
+    });
+  });
+});
+</script>

@@ -6,32 +6,33 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Pemesanan;
 use Illuminate\Support\Facades\Storage;
+use Barryvdh\DomPDF\Facade\Pdf; // ✅ Tambahkan ini agar tidak perlu \Pdf di bawah
 
 class PemesananController extends Controller
 {
     /**
-     * 🔹 Menampilkan daftar pemesanan
+     * ✅ Menampilkan daftar pemesanan
      */
     public function index(Request $request)
     {
         $search = $request->query('search');
-        $filterJenis = $request->query('jenis'); // filter tiket / penginapan
+        $filterKategori = $request->query('kategori'); 
 
         $pemesanans = Pemesanan::when($search, function ($query, $search) {
                 $query->where('nama_pemesan', 'like', "%{$search}%")
                       ->orWhere('email', 'like', "%{$search}%");
             })
-            ->when($filterJenis, function ($query, $filterJenis) {
-                $query->where('jenis', $filterJenis);
+            ->when($filterKategori, function ($query, $filterKategori) {
+                $query->where('kategori', $filterKategori);
             })
             ->orderByDesc('id')
             ->paginate(10);
 
-        return view('backend.reservasi.pemesanan.index', compact('pemesanans', 'search', 'filterJenis'));
+        return view('backend.reservasi.pemesanan.index', compact('pemesanans', 'search', 'filterKategori'));
     }
 
     /**
-     * 🔹 Menampilkan detail pemesanan (AJAX / Modal)
+     * ✅ Detail pemesanan via AJAX modal
      */
     public function show($id)
     {
@@ -40,56 +41,63 @@ class PemesananController extends Controller
     }
 
     /**
-     * 🔹 Menambahkan pemesanan baru (opsional jika admin input manual)
-     */
-    public function store(Request $request)
-    {
-        $validated = $request->validate([
-            'nama_pemesan' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
-            'bukti_pembayaran' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
-            'total' => 'required|numeric|min:0',
-            'jenis' => 'required|in:tiket,penginapan',
-            'status' => 'required|in:Konfirmasi,Batal,Berhasil',
-        ]);
-
-        if ($request->hasFile('bukti_pembayaran')) {
-            $validated['bukti_pembayaran'] = $request->file('bukti_pembayaran')->store('bukti_pembayaran', 'public');
-        }
-
-        Pemesanan::create($validated);
-
-        return redirect()->back()->with('success', '✅ Pemesanan baru berhasil ditambahkan!');
-    }
-
-    /**
-     * 🔹 Update status pemesanan (Konfirmasi / Batal / Berhasil)
+     * ✅ Update status manual (tanpa Midtrans)
      */
     public function updateStatus(Request $request, $id)
     {
-        $validated = $request->validate([
-            'status' => 'required|in:Konfirmasi,Batal,Berhasil',
-        ]);
-
         $pemesanan = Pemesanan::findOrFail($id);
-        $pemesanan->update(['status' => $validated['status']]);
+        $status = $request->get('status');
 
-        return redirect()->back()->with('success', '✅ Status pemesanan berhasil diperbarui!');
+        // 🔹 Update status pemesanan
+        $pemesanan->status = $status;
+        $pemesanan->save();
+
+        // 🔹 Jika status disetujui (Berhasil), buat nota otomatis
+        if ($status === 'Berhasil') {
+            // Pastikan folder "backend/nota/template.blade.php" tersedia
+            $pdf = Pdf::loadView('backend.nota.template', [
+                'pemesanan' => $pemesanan,
+            ]);
+
+            // Simpan file PDF ke storage/app/public/nota/
+            $path = "nota/nota-{$pemesanan->id}.pdf";
+            Storage::disk('public')->put($path, $pdf->output());
+
+            // Update path ke kolom database
+            $pemesanan->update(['nota_path' => $path]);
+        }
+
+        return back()->with('success', '✅ Status pesanan berhasil diperbarui.');
     }
 
     /**
-     * 🔹 Hapus data pemesanan
+     * ✅ Download Nota jika tersedia
+     */
+    public function downloadNota($id)
+    {
+        $order = Pemesanan::findOrFail($id);
+
+        if (!$order->nota_path || !Storage::disk('public')->exists($order->nota_path)) {
+            return back()->with('error', '❌ Nota tidak ditemukan!');
+        }
+
+        return response()->download(storage_path("app/public/{$order->nota_path}"));
+    }
+
+    /**
+     * 🗑️ Hapus pesanan dan file notanya
      */
     public function destroy($id)
     {
         $pemesanan = Pemesanan::findOrFail($id);
 
-        if ($pemesanan->bukti_pembayaran) {
-            Storage::disk('public')->delete($pemesanan->bukti_pembayaran);
+        // Hapus file nota jika ada
+        if ($pemesanan->nota_path && Storage::disk('public')->exists($pemesanan->nota_path)) {
+            Storage::disk('public')->delete($pemesanan->nota_path);
         }
 
         $pemesanan->delete();
 
-        return redirect()->back()->with('success', '🗑️ Data pemesanan berhasil dihapus!');
+        return redirect()->back()->with('success', '🗑️ Pemesanan berhasil dihapus!');
     }
 }

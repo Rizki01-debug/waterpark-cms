@@ -1,6 +1,8 @@
 @extends('layouts.backend')
+
 @section('title', 'Laporan')
 @section('page-title', 'Laporan')
+@section('breadcrumb', 'Laporan')
 
 @section('content')
 <div class="container-fluid py-4">
@@ -51,7 +53,7 @@
       {{-- Tombol Filter --}}
       <div class="col-md-1 d-flex align-items-end">
         <button type="submit" class="btn btn-danger fw-semibold w-100 py-2">
-          <i class="fas fa-search me-1"></i> Tampilkan
+          <i class="fas fa-search me-1"></i> Filter
         </button>
       </div>
     </form>
@@ -64,23 +66,13 @@
       <ul class="dropdown-menu dropdown-menu-dark">
         <li>
           <a class="dropdown-item"
-             href="{{ route('admin.laporan.export.pdf', [
-                'kategori' => request('kategori'),
-                'start_date' => request('start_date'),
-                'end_date' => request('end_date'),
-                'status' => request('status')
-             ]) }}">
+             href="{{ route('admin.laporan.export.pdf', request()->all()) }}">
             <i class="fas fa-file-pdf me-2 text-danger"></i> Export PDF
           </a>
         </li>
         <li>
           <a class="dropdown-item"
-             href="{{ route('admin.laporan.export.excel', [
-                'kategori' => request('kategori'),
-                'start_date' => request('start_date'),
-                'end_date' => request('end_date'),
-                'status' => request('status')
-             ]) }}">
+             href="{{ route('admin.laporan.export.excel', request()->all()) }}">
             <i class="fas fa-file-excel me-2 text-success"></i> Export Excel
           </a>
         </li>
@@ -122,7 +114,7 @@
     <div class="col-md-6 mb-4">
       <div class="card bg-dark border-0 shadow-lg rounded-4 p-3">
         <h6 class="text-white fw-semibold mb-3">
-          <i class="fas fa-chart-line me-2 text-info"></i> Grafik Profit
+          <i class="fas fa-chart-line me-2 text-info"></i> Grafik Profit Harian
         </h6>
         <canvas id="profitChart" height="180"></canvas>
       </div>
@@ -147,16 +139,16 @@
               </tr>
             </thead>
             <tbody>
-              @forelse ($transaksi as $i => $t)
+              @forelse ($transaksi as $index => $t)
                 <tr>
-                  <td>{{ $i + 1 }}</td>
+                  <td>{{ $index + 1 }}</td>
                   <td>{{ $t->nama_pemesan }}</td>
                   <td>{{ ucfirst($t->jenis) }}</td>
                   <td>Rp {{ number_format($t->total, 0, ',', '.') }}</td>
                   <td>
-                    @if($t->status == 'Berhasil')
+                    @if ($t->status === 'Berhasil')
                       <span class="badge bg-success px-3 py-2">Berhasil</span>
-                    @elseif($t->status == 'Batal')
+                    @elseif ($t->status === 'Batal')
                       <span class="badge bg-danger px-3 py-2">Batal</span>
                     @else
                       <span class="badge bg-warning text-dark px-3 py-2">Konfirmasi</span>
@@ -166,7 +158,9 @@
                 </tr>
               @empty
                 <tr>
-                  <td colspan="6" class="text-center text-muted py-4">Tidak ada transaksi dalam periode ini.</td>
+                  <td colspan="6" class="text-center text-muted py-4">
+                    Tidak ada transaksi dalam periode ini.
+                  </td>
                 </tr>
               @endforelse
             </tbody>
@@ -177,39 +171,42 @@
   </div>
 
 </div>
+@endsection
 
 {{-- ================= SCRIPT GRAFIK ================= --}}
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-  const ctx = document.getElementById('profitChart').getContext('2d');
-  const chartData = @json($chartData);
-  const labels = chartData.map(d => d.tanggal);
-  const data = chartData.map(d => d.total_profit);
+  const ctx = document.getElementById('profitChart')?.getContext('2d');
+  if (ctx) {
+    const chartData = @json($chartData);
+    const labels = chartData.map(item => item.tanggal);
+    const data = chartData.map(item => item.total_profit);
 
-  new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: labels,
-      datasets: [{
-        label: 'Profit Harian',
-        data: data,
-        borderColor: '#4f9aff',
-        backgroundColor: 'rgba(79, 154, 255, 0.2)',
-        fill: true,
-        tension: 0.3,
-        pointBackgroundColor: '#4f9aff',
-        pointRadius: 4
-      }]
-    },
-    options: {
-      scales: {
-        x: { ticks: { color: '#fff' } },
-        y: { ticks: { color: '#fff' } }
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels,
+        datasets: [{
+          label: 'Profit Harian',
+          data,
+          borderColor: '#4f9aff',
+          backgroundColor: 'rgba(79,154,255,0.2)',
+          fill: true,
+          tension: 0.3,
+          pointBackgroundColor: '#4f9aff',
+          pointRadius: 4
+        }]
       },
-      plugins: { legend: { labels: { color: '#fff' } } }
-    }
-  });
+      options: {
+        responsive: true,
+        scales: {
+          x: { ticks: { color: '#fff' } },
+          y: { ticks: { color: '#fff' } }
+        },
+        plugins: { legend: { labels: { color: '#fff' } } }
+      }
+    });
+  }
 </script>
 @endpush
-@endsection

@@ -42,6 +42,7 @@ use App\Http\Controllers\User\BlogNewsController as UserBlogNewsController;
 use App\Http\Controllers\User\BlogEventController as UserBlogEventController;
 use App\Http\Controllers\User\ProfileController as UserProfileController;
 use App\Http\Controllers\User\PemesananController as UserPemesananController;
+use App\Http\Controllers\MidtransCallbackController;
 
 
 
@@ -64,10 +65,10 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/user/profile', [UserProfileController::class, 'update'])->name('user.profile.update');
 });
 
-Route::middleware(['auth'])->group(function () {
-    Route::get('/user/pemesanan', [UserPemesananController::class, 'index'])->name('user.pemesanan.index');
-    Route::get('/user/pemesanan/{id}/nota', [UserPemesananController::class, 'downloadNota'])->name('user.pemesanan.nota');
-    Route::delete('/user/pemesanan/{id}', [UserPemesananController::class, 'destroy'])->name('user.pemesanan.destroy');
+Route::prefix('user')->name('user.')->middleware('auth')->group(function () {
+    Route::get('/pemesanan', [UserPemesananController::class, 'index'])->name('pemesanan.index');
+    Route::get('/pemesanan/{id}/nota', [UserPemesananController::class, 'downloadNota'])->name('pemesanan.nota');
+    Route::delete('/pemesanan/{id}', [UserPemesananController::class, 'destroy'])->name('pemesanan.destroy');
 });
 
 Route::middleware(['auth', 'user'])->group(function () {
@@ -115,6 +116,39 @@ Route::middleware(['auth', 'user'])->group(function () {
 
     Route::get('/blog/events', [UserBlogEventController::class, 'index'])->name('blog.events.index');
     Route::get('/blog/events/{id}', [UserBlogEventController::class, 'show'])->name('blog.events.show');
+
+
+    // --------------------------------
+    // Fe Payment
+    // --------------------------------
+    Route::post('/payment/create', [App\Http\Controllers\User\PaymentController::class, 'createSnapToken'])
+    ->middleware('auth')
+    ->name('payment.create');
+
+    Route::post('/midtrans/notification', [App\Http\Controllers\User\PaymentController::class, 'notification'])->name('midtrans.notification');
+
+    // Redirect setelah pembayaran
+    Route::get('/payment/finish', function() {
+    return view('payment.finish');
+    })->name('payment.finish');
+
+    Route::get('/payment/unfinish', function() {
+    return view('payment.unfinish');
+    })->name('payment.unfinish');
+
+    Route::get('/payment/error', function() {
+    return view('payment.error');
+    })->name('payment.error');
+
+    Route::get('/payment/unfinish', fn() => view('payment.unfinish'))->name('payment.unfinish');
+
+// ======================================================================
+// ⚡ MIDTRANS CALLBACK (TIDAK PERLU AUTH, HARUS BISA DIAKSES MIDTRANS)
+// ======================================================================
+Route::post('/midtrans/callback', [MidtransCallbackController::class, 'handle'])
+    ->name('midtrans.callback');
+
+
 
 
 /*
@@ -176,16 +210,23 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     // Management Reservasi
     // --------------------------------
     Route::prefix('reservasi')->name('reservasi.')->group(function () {
-        Route::resource('reguler', ReservasiRegulerController::class)->names('reguler');
-        Route::resource('paket', ReservasiPaketController::class)->names('paket');
-        Route::resource('penginapan', ReservasiPenginapanController::class)->names('penginapan');
 
-        // Pemesanan
-        Route::get('/pemesanan', [PemesananController::class, 'index'])->name('pemesanan.index');
-        Route::get('/pemesanan/{id}', [PemesananController::class, 'show'])->name('pemesanan.show');
-        Route::put('/pemesanan/{id}/status', [PemesananController::class, 'updateStatus'])->name('pemesanan.updateStatus');
-        Route::delete('/pemesanan/{id}', [PemesananController::class, 'destroy'])->name('pemesanan.destroy');
-    });
+    // ==============================
+    // Tiket Reguler / Paket / Penginapan
+    // ==============================
+    Route::resource('reguler', ReservasiRegulerController::class)->names('reguler');
+    Route::resource('paket', ReservasiPaketController::class)->names('paket');
+    Route::resource('penginapan', ReservasiPenginapanController::class)->names('penginapan');
+
+    // ==============================
+    // Pemesanan (Admin / Backend)
+    // ==============================
+    Route::get('/pemesanan', [PemesananController::class, 'index'])->name('pemesanan.index');
+    Route::get('/pemesanan/{id}', [PemesananController::class, 'show'])->name('pemesanan.show');
+     Route::put('/pemesanan/{id}/status', [PemesananController::class, 'updateStatus'])
+    ->name('pemesanan.updateStatus');
+    Route::delete('/pemesanan/{id}', [PemesananController::class, 'destroy'])->name('pemesanan.destroy');
+});
 
 
     // --------------------------------

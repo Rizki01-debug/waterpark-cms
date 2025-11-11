@@ -18,6 +18,7 @@ class Pemesanan extends Model
         'email',
         'telepon',
         'bukti_pembayaran',
+        'nota_path',
         'status',
         'total',               // total harga
         'jenis',               // tiket / penginapan
