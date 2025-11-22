@@ -66,8 +66,7 @@
           <li><i class="bi bi-chevron-right"></i> <a href="{{ url('/') }}">Beranda</a></li>
           <li><i class="bi bi-chevron-right"></i> <a href="{{ route('fasilitas.index') }}">Fasilitas</a></li>
           <li><i class="bi bi-chevron-right"></i> <a href="{{ route('galeri.index') }}">Galeri</a></li>
-          <li><i class="bi bi-chevron-right"></i> <a href="#reservasi">Reservasi</a></li>
-          <li><i class="bi bi-chevron-right"></i> <a href="#kontak">Kontak</a></li>
+          <li><i class="bi bi-chevron-right"></i> <a href="{{ route('reservasi.reguler.index') }}">Reservasi</a></li>
         </ul>
       </div>
 

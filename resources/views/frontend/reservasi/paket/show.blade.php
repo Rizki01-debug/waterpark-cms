@@ -56,7 +56,7 @@
           {{-- Tombol --}}
           <div class="d-flex gap-3 mt-3">
               <button 
-                class="btn btn-danger btn-pay"
+                class="btn btn-primary btn-pay"
                 data-tiket-id="{{ $paket->id }}"
                 data-jenis="paket">
                 Pesan & Bayar

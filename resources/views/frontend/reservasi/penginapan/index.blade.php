@@ -48,7 +48,7 @@
               </a>
 
               <button 
-                class="btn btn-danger btn-pay"
+                class="btn btn-primary btn-pay"
                 data-tiket-id="{{ $item->id }}"
                 data-jenis="penginapan">
                 <i class="bi bi-credit-card"></i> Pesan & Bayar

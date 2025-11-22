@@ -8588,13 +8588,13 @@ section,
   }
 
   .btn-danger {
-    background-color: #d62828;
-    border-color: #d62828;
+    background-color: #0096c7;
+    border-color: #0096c7;
   }
 
   .btn-danger:hover {
-    background-color: #bb2525;
-    border-color: #bb2525;
+    background-color: #0096c7;
+    border-color: #fff;
   }
 
   /* card paket */

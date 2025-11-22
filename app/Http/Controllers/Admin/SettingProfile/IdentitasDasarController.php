@@ -23,28 +23,29 @@ class IdentitasDasarController extends Controller
     }
 
     // Simpan data baru
-    public function store(Request $request)
-    {
-        $validated = $request->validate([
-            'nama' => 'required|string|max:255',
-            'tagline' => 'nullable|string|max:255',
-            'deskripsi' => 'nullable|string',
-            'tanggal_berdiri' => 'nullable|date',
-            'logo_nav' => 'nullable|image|mimes:jpg,jpeg,png,svg|max:2048',
-            'logo_footer' => 'nullable|image|mimes:jpg,jpeg,png,svg|max:2048',
-            'favicon' => 'nullable|image|mimes:jpg,jpeg,png,ico|max:1024',
-        ]);
+   public function store(Request $request)
+{
+    $validated = $request->validate([
+        'nama' => 'required',
+        'tagline' => 'nullable',
+        'deskripsi' => 'nullable',
+        'tanggal_berdiri' => 'nullable|date',
+        'logo_nav' => 'nullable|image',
+        'logo_footer' => 'nullable|image',
+        'favicon' => 'nullable|image',
+    ]);
 
-        foreach (['logo_nav', 'logo_footer', 'favicon'] as $field) {
-            if ($request->hasFile($field)) {
-                $validated[$field] = $request->file($field)->store('uploads/profile', 'public');
-            }
+    // Upload file
+    foreach (['logo_nav','logo_footer','favicon'] as $file) {
+        if ($request->hasFile($file)) {
+            $validated[$file] = $request->file($file)->store('profile', 'public');
         }
-
-        CompanyProfile::create($validated);
-        return redirect()->route('admin.settingprofile.identitas.index')
-            ->with('success', 'Data identitas dasar berhasil ditambahkan!');
     }
+
+    CompanyProfile::create($validated);
+
+    return back()->with('success', 'Data identitas dasar berhasil ditambahkan!');
+}
 
     // Halaman edit data
     public function edit($id)

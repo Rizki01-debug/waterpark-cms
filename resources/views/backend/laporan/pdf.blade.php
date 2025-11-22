@@ -49,7 +49,6 @@
             <tr>
                 <th>No</th>
                 <th>Nama Pemesan</th>
-                <th>Kategori</th>
                 <th>Total</th>
                 <th>Status</th>
                 <th>Tanggal</th>
@@ -60,7 +59,6 @@
                 <tr>
                     <td>{{ $index + 1 }}</td>
                     <td>{{ $item->nama_pemesan }}</td>
-                    <td>{{ $item->jenis ?? '-' }}</td>
                     <td>Rp {{ number_format($item->total, 0, ',', '.') }}</td>
                     <td>{{ $item->status }}</td>
                     <td>{{ \Carbon\Carbon::parse($item->created_at)->format('d M Y') }}</td>

@@ -44,7 +44,7 @@
                                 <i class="bi bi-eye"></i> Lihat Detail
                             </a>
               <button 
-                class="btn btn-danger btn-pay"
+                class="btn btn-primary btn-pay"
                 data-tiket-id="{{ $item->id }}"
                 data-jenis="paket">
                 Pesan & Bayar

@@ -26,7 +26,7 @@
       <h1 class="fw-bold display-4 mb-3 text-white">{{ $banner->judul ?? 'Selamat Datang di Embun Pelangi Waterpark' }}</h1>
       <p class="lead mb-4">{{ $banner->deskripsi ?? 'Nikmati keseruan tanpa batas di destinasi air keluarga terbaik.' }}</p>
       <div class="d-flex justify-content-center gap-3 flex-wrap">
-        <a href="#reservasi" class="btn btn-danger btn-lg rounded-pill shadow-sm px-4">Pesan Tiket</a>
+        <a href="#reservasi" class="btn btn-primary btn-lg rounded-pill shadow-sm px-4">Pesan Tiket</a>
         <a href="#fasilitas" class="btn btn-outline-light btn-lg rounded-pill px-4">Lihat Fasilitas</a>
       </div>
     </div>
@@ -103,26 +103,67 @@
       </div>
 
       <div class="text-center mt-5">
-        <a href="{{ route('fasilitas.index') }}" class="btn btn-danger btn-lg rounded-pill px-4 shadow-sm">
+        <a href="{{ route('fasilitas.index') }}" class="btn btn-primary btn-lg rounded-pill px-4 shadow-sm">
           <i class="bi bi-building"></i> Lihat Semua Fasilitas
         </a>
       </div>
     </div>
   </section>
 
-  {{-- 🎫 PROMO PAKET --}}
-  @php $promoPaket = $paket->whereNotNull('deskripsi')->first(); @endphp
-  @if($promoPaket)
-    <section id="promo" class="py-5 bg-light">
-      <div class="container text-center" data-aos="zoom-in">
-        <div class="p-5 bg-white rounded-4 shadow-sm border">
-          <h2 class="fw-bold text-danger mb-3">{{ $promoPaket->nama_paket }}</h2>
-          <p class="mb-4 text-dark">{{ $promoPaket->deskripsi }}</p>
-          <a href="#reservasi" class="btn btn-danger btn-lg rounded-pill shadow-sm px-4">Pesan Sekarang</a>
+{{-- 🎫 PROMO PAKET (GRID CARD) --}}
+<section id="promo" class="py-5 bg-light">
+  <div class="container" data-aos="fade-up">
+
+    <h2 class="fw-bold text-center mb-4 text-danger">Promo Paket Spesial</h2>
+
+    <div class="row g-4 justify-content-center">
+
+      @foreach($paket as $item)
+      <div class="col-md-4 col-lg-3">
+        <div class="card border-0 shadow-sm rounded-4 overflow-hidden h-100">
+
+          <img src="{{ $item->gambar ? asset('storage/'.$item->gambar) : asset('simplecity/img/default-image.jpg') }}"
+               class="card-img-top" style="height: 200px; object-fit: cover;">
+
+          <div class="card-body text-center">
+            <h5 class="fw-bold text-dark">{{ $item->nama_paket }}</h5>
+            <p class="text-muted small">{{ Str::limit($item->deskripsi, 80) }}</p>
+
+            {{-- Harga --}}
+            @php
+              $hargaDiskon = $item->diskon > 0 
+                ? $item->harga - ($item->harga * $item->diskon / 100)
+                : $item->harga;
+            @endphp
+
+            @if($item->diskon > 0)
+              <p class="mb-1">
+                <span class="text-decoration-line-through text-muted">
+                  Rp{{ number_format($item->harga,0,',','.') }}
+                </span>
+                <span class="text-danger fw-bold ms-2">
+                  Rp{{ number_format($hargaDiskon,0,',','.') }}
+                </span>
+              </p>
+            @else
+              <p class="fw-bold text-primary">Rp{{ number_format($item->harga,0,',','.') }}</p>
+            @endif
+
+            <a href="{{ route('reservasi.paket.show', $item->id) }}"
+               class="btn btn-danger btn-sm rounded-pill px-3">
+               <i class="bi bi-ticket"></i> Pesan Sekarang
+            </a>
+
+          </div>
         </div>
       </div>
-    </section>
-  @endif
+      @endforeach
+
+    </div>
+
+  </div>
+</section>
+
 
   {{-- 🧾 CTA RESERVASI --}}
   <section id="reservasi" class="py-5 bg-light-subtle">
@@ -134,9 +175,9 @@
         </div>
         <div class="col-md-4 text-md-end mt-3 mt-md-0">
           <div class="d-flex flex-column gap-2">
-            <a href="{{ route('reservasi.reguler.index') }}" class="btn btn-danger rounded-pill">Tiket Reguler</a>
-            <a href="{{ route('reservasi.paket.index') }}" class="btn btn-danger rounded-pill">Tiket Paket</a>
-            <a href="#" class="btn btn-danger rounded-pill">Penginapan</a>
+            <a href="{{ route('reservasi.reguler.index') }}" class="btn btn-primary rounded-pill">Tiket Reguler</a>
+            <a href="{{ route('reservasi.paket.index') }}" class="btn btn-primary rounded-pill">Tiket Paket</a>
+            <a href="{{ route('reservasi.penginapan.index') }}" class="btn btn-primary rounded-pill">Penginapan</a>
           </div>
         </div>
       </div>
